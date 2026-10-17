@@ -3,109 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FocusTrack - معاذ مجدي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>FocusTrack AI - ركز أكثر .. افهم أفضل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
-body{background:#0B1220;color:#fff;display:flex;justify-content:center;padding:12px;min-height:100vh}
-.app{width:100%;max-width:390px;background:#111A2F;border-radius:28px;overflow:hidden;border:1px solid #1e293b;box-shadow:0 10px 40px rgba(0,0,0,0.4)}
-.header{padding:18px 18px 12px;display:flex;justify-content:space-between;align-items:center}
-.header h1{font-size:18px;font-weight:800;letter-spacing:0.5px}
-.header h1 span{color:#7c5cff}
-.header p{font-size:11px;color:#64748b;margin-top:2px}
-.live{background:#0f172a;border:1px solid #1e293b;color:#22c55e;font-size:10px;padding:5px 12px;border-radius:20px;font-weight:700}
-.camSec{padding:0 12px}
-.camCard{width:100%;height:400px;background:#000;border-radius:20px;overflow:hidden;position:relative;border:1px solid #1e293b}
-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
-.camOverlay{position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.7) 100%);pointer-events:none}
-.topTags{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none}
-.tag{background:rgba(15,23,42,0.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:11px;padding:6px 12px;border-radius:20px}
-.bottomBar{position:absolute;bottom:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center}
-.rec{background:#ef4444;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;display:flex;align-items:center;gap:5px}
-.btnMain{width:100%;background:linear-gradient(135deg,#7c5cff,#5b3bff);color:#fff;border:none;padding:15px;border-radius:14px;font-size:15px;font-weight:700;margin-top:12px;cursor:pointer;box-shadow:0 8px 20px rgba(124,92,255,0.3)}
-.btnMain:active{transform:scale(0.98)}
-.stats{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{background:#151E32;border:1px solid #1e293b;border-radius:16px;padding:14px}
-.card h4{font-size:11px;color:#64748b;font-weight:600}
-.card .num{font-size:22px;font-weight:800;margin-top:6px}
-.card .sub{font-size:10px;color:#22c55e;margin-top:3px}
-.progress{margin-top:10px}
-.progress .barBg{width:100%;height:6px;background:#1e293b;border-radius:10px;overflow:hidden;margin-top:6px}
-.progress .barFill{height:100%;background:linear-gradient(90deg,#7c5cff,#22c55e);border-radius:10px}
-.tasks{padding:0 12px 16px}
-.task{background:#151E32;border:1px solid #1e293b;border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.task.active{border-color:#7c5cff;background:linear-gradient(135deg,#151E32,#1e1b4b)}
-.taskTitle{font-size:13px;font-weight:600}
-.taskTime{font-size:11px;color:#64748b;margin-top:2px}
-.dot{width:12px;height:12px;border-radius:50%;background:#334155;border:2px solid #1e293b}
-.dot.active{background:#22c55e;border-color:#22c55e;box-shadow:0 0 10px #22c55e}
-.helpBox{margin:12px;background:rgba(124,92,255,0.1);border:1px dashed #7c5cff;border-radius:14px;padding:12px;text-align:center;font-size:11px;color:#a5b4fc;line-height:1.7}
+body{background:#f0f6ff}
+.header{background:#2563eb;color:#fff;padding:12px 16px 16px;text-align:center;position:sticky;top:0;z-index:10}
+.header h1{font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px}
+.header p{font-size:12px;opacity:0.9;margin-top:4px}
+.tabs{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.tab{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;cursor:pointer}
+.tab.active{background:#fff;color:#2563eb;font-weight:700}
+.container{padding:12px;max-width:420px;margin:0 auto;padding-bottom:90px}
+.card{background:#fff;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 2px 12px rgba(37,99,235,0.08);border:1px solid #e0e7ff}
+.circleWrap{display:flex;flex-direction:column;align-items:center}
+.circle{width:160px;height:160px;border-radius:50%;border:12px solid #e5e7eb;border-top-color:#16a34a;border-right-color:#16a34a;display:flex;align-items:center;justify-content:center;position:relative}
+.circle b{font-size:42px;color:#16a34a}
+.badge{margin-top:10px;background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.small{font-size:11px;color:#64748b;margin-top:6px;text-align:center}
+.btnBlue{background:#2563eb;color:#fff;border:none;width:100%;padding:12px;border-radius:12px;font-weight:700;font-size:14px;margin-top:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btnBlue:active{transform:scale(0.98)}
+.camBox{background:#0f172a;border-radius:16px;overflow:hidden;height:260px;position:relative;margin-top:10px;border:2px solid #1e293b}
+.camBox video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
+.faceGuide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.faceRect{width:140px;height:180px;border:2px solid #22c55e;border-radius:24px;box-shadow:0 0 0 2000px rgba(0,0,0,0.3);position:relative}
+.faceRect::before,.faceRect::after{content:'';position:absolute;width:20px;height:20px;border-color:#22c55e;border-style:solid}
+.faceRect::before{top:-2px;left:-2px;border-width:4px 0 0 4px;border-radius:10px 0 0 0}
+.faceRect::after{bottom:-2px;right:-2px;border-width:0 4px 4px 0;border-radius:0 0 10px 0}
+.percentBadge{position:absolute;bottom:10px;right:10px;background:#22c55e;color:#fff;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.liveDot{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.6);color:#fff;padding:4px 10px;border-radius:20px;font-size:11px;display:flex;align-items:center;gap:5px}
+.liveDot i{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#f8fafc;border-radius:12px;margin-bottom:8px;font-size:13px}
+.bar{height:8px;background:#e2e8f0;border-radius:10px;overflow:hidden;flex:1;margin:0 10px}
+.fill{height:100%;background:#2563eb;border-radius:10px}
+.result{font-size:20px;font-weight:800;color:#16a34a}
+.bottomNav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;padding:8px 0;z-index:20}
+.navItem{font-size:10px;color:#64748b;text-align:center;cursor:pointer;padding:4px 12px;border-radius:12px}
+.navItem.active{background:#2563eb;color:#fff}
+.navItem i{font-size:20px;display:block;margin-bottom:2px}
+.help{background:#fffbeb;border:1px dashed #f59e0b;border-radius:12px;padding:10px;font-size:11px;color:#92400e;text-align:center;line-height:1.6;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="app">
 <div class="header">
-<div><h1>Focus<span>Track</span></h1><p>برنامج اللوه • معاذ مجدي</p></div>
-<div class="live">● LIVE</div>
+<h1>FocusTrack AI <span style="background:#fff;color:#2563eb;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px">↗</span></h1>
+<p>ركز أكثر .. افهم أفضل</p>
+<div class="tabs"><div class="tab">مدرس</div><div class="tab active">طالب</div></div>
+<p style="margin-top:8px;font-size:11px;opacity:0.8">نموذج تجريبي - جميع البيانات محاكاة</p>
 </div>
 
-<div class="camSec">
-<div class="camCard">
-<video id="cam" autoplay playsinline muted></video>
-<div class="camOverlay"></div>
-<div class="topTags">
-<div class="tag" id="focusTag">🎯 تركيز 0%</div>
-<div class="tag" id="timeTag">00:00:00</div>
-</div>
-<div class="bottomBar">
-<div class="rec"><span style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:blink 1s infinite"></span> REC</div>
-<div class="tag" id="statusTag" style="background:#7c5cff;border:none">مقفولة</div>
-</div>
-</div>
-<button class="btnMain" onclick="startCamera()">📷 سماح بتشغيل الكاميرا</button>
-<div class="helpBox" id="help">نفس واجهة مستر معاذ بالظبط<br>دوسي الزرار - هيطلعلك <b>Allow</b> فوق - دوسي <b>سماح</b><br>الكاميرا الحقيقية هتشتغل مكان الصورة الوهمية</div>
-</div>
-
-<div class="stats">
-<div class="card"><h4>⏱ وقت التركيز</h4><div class="num" id="focusTime">0 د</div><div class="sub">+12% عن أمس</div></div>
-<div class="card"><h4>🎯 جلسات اللوه</h4><div class="num">4 / 8</div><div class="sub">مكتملة اليوم</div></div>
-<div class="card" style="grid-column:1/-1"><div style="display:flex;justify-content:space-between"><h4>📈 تقدم الأسبوع</h4><span style="font-size:11px;color:#7c5cff">68%</span></div><div class="barBg"><div class="barFill" style="width:68%"></div></div></div>
-</div>
-
-<div class="tasks">
-<div class="task active"><div><div class="taskTitle">📚 مذاكرة القانون المدني</div><div class="taskTime">جاري الآن • اللوه</div></div><div class="dot active"></div></div>
-<div class="task"><div><div class="taskTitle">📝 مراجعة المحاضرات</div><div class="taskTime">بعد 45 دقيقة</div></div><div class="dot"></div></div>
-<div class="task"><div><div class="taskTitle">☕ بريك</div><div class="taskTime">بعد ساعة</div></div><div class="dot"></div></div>
+<div class="container">
+<div class="card">
+<div class="circleWrap">
+<div style="font-size:12px;color:#64748b;margin-bottom:8px">📷 الكاميرا تعمل</div>
+<div class="circle"><b id="perc">82%</b></div>
+<div style="margin-top:12px;font-weight:700">مستوى التركيز الحالي</div>
+<div class="badge">🟢 التركيز جيد</div>
+<div class="small">مؤشر تركيز تقريبي - تحليل تجريبي</div>
+<button class="btnBlue" onclick="startRealCam()">▶ بدء متابعة التركيز - شغلي الكاميرا الحقيقية</button>
+<div class="small">في المتوسط كل 6 دقائق</div>
 </div>
 </div>
 
-<style>@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}</style>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<b style="font-size:14px">معاينة الكاميرا (حقيقية الآن)</b>
+<span style="font-size:11px;background:#dcfce7;color:#16a34a;padding:2px 8px;border-radius:10px">● LIVE</span>
+</div>
+<div class="camBox" id="camBox">
+<video id="realCam" autoplay playsinline muted></video>
+<div class="faceGuide"><div class="faceRect"></div></div>
+<div class="percentBadge" id="camPerc">82%</div>
+<div class="liveDot"><i></i> الكاميرا الحقيقية</div>
+</div>
+<div class="help" id="help">دوسي بدء متابعة التركيز فوق - هيطلب سماح للكاميرا - صورتك الحقيقية هتظهر مكان الرسمة الكرتون</div>
+
+<div style="margin-top:14px">
+<b style="font-size:13px">تحليل الذكاء الاصطناعي (تجريبي)</b>
+<div class="row"><span>👁️ اتجاه العين</span><span style="background:#eff6ff;padding:2px 8px;border-radius:8px">أمام الشاشة</span></div>
+<div class="row"><span>🙂 تعبير الوجه</span><span>طبيعي</span></div>
+<div class="row"><span>🧑‍💻 حركة الرأس</span><span>مستقرة</span></div>
+
+<div style="margin-top:12px"><b style="font-size:12px">حساب مؤشر التركيز (محاكاة)</b>
+<div class="row"><span>اتجاه العين 40%</span><div class="bar"><div class="fill" style="width:84%"></div></div><span id="eyeVal">84%</span></div>
+<div class="row"><span>حركة الرأس 30%</span><div class="bar"><div class="fill" style="width:79%"></div></div><span>79%</span></div>
+<div class="row"><span>تعبير الوجه 30%</span><div class="bar"><div class="fill" style="width:82%"></div></div><span>82%</span></div>
+<div style="display:flex;justify-content:space-between;margin-top:8px"><span class="result" id="resPerc">82% تركيز</span><b>النتيجة</b></div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<b>الحصة الحالية</b>
+<div class="row"><span>مدة الحصة</span><span>42 دقيقة</span></div>
+<div class="row"><span>مدة التركيز</span><span>35 دقيقة</span></div>
+<div class="row"><span>مدة التشتت</span><span>7 دقائق</span></div>
+</div>
+</div>
+
+<div class="bottomNav">
+<div class="navItem">🏠<br>الرئيسية</div>
+<div class="navItem active">📷<br>متابعة التركيز</div>
+<div class="navItem">📊<br>إحصائيات</div>
+<div class="navItem">⚙️<br>الإعدادات</div>
+</div>
+
 <script>
 let sec=0, interval=null;
-async function startCamera(){
-const help=document.getElementById('help');
-const status=document.getElementById('statusTag');
-help.innerHTML='⏳ بيطلب إذن الكاميرا... بصي فوق هتلاقي Allow دوسي سماح';
+async function startRealCam(){
+let help=document.getElementById('help');
+help.innerHTML='⏳ بيطلب إذن الكاميرا... دوسي Allow / سماح اللي هيظهر فوق';
 try{
-const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false});
-document.getElementById('cam').srcObject=stream;
-status.innerText='✅ شغالة'; status.style.background='#22c55e';
-help.innerHTML='✅ <b style="color:#4ade80">الكاميرا الحقيقية اشتغلت!</b><br>نفس شكل موقع مستر معاذ بالظبط بس الكاميرا بقت حقيقية';
-help.style.background='rgba(34,197,94,0.1)'; help.style.borderColor='#22c55e';
+let stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false});
+document.getElementById('realCam').srcObject=stream;
+help.innerHTML='✅ <b style="color:#16a34a">الكاميرا الحقيقية اشتغلت!</b><br>صورتك ظهرت مكان الرسمة الوهمية - نفس شكل jy19 بالظبط';
+help.style.background='#f0fdf4'; help.style.borderColor='#16a34a';
 if(interval) clearInterval(interval);
 interval=setInterval(()=>{
 sec++;
-let h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60), s=sec%60;
-let t=(h<10?'0'+h:h)+':'+(m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
-document.getElementById('timeTag').innerText=t;
-document.getElementById('focusTime').innerText=m+' د';
-let f=Math.min(98, 65+Math.floor(Math.random()*15)+(m>2?10:0));
-document.getElementById('focusTag').innerText='🎯 تركيز '+f+'%';
-},1000);
-}catch(err){
-help.innerHTML='❌ السماح مرفوض<br>دوسي على علامة القفل 🔒 فوق جنب اللينك > الأذونات > الكاميرا > سماح > وبعدين دوسي الزرار تاني';
-help.style.background='rgba(239,68,68,0.1)'; help.style.borderColor='#ef4444';
-alert('عشان الكاميرا تشتغل: دوسي على القفل 🔒 اللي فوق واعملي سماح');
+let p=78+Math.floor(Math.random()*15);
+document.getElementById('perc').innerText=p+'%';
+document.getElementById('camPerc').innerText=p+'%';
+document.getElementById('resPerc').innerText=p+'% تركيز';
+document.getElementById('eyeVal').innerText=(80+Math.floor(Math.random()*10))+'%';
+},1500);
+}catch(e){
+help.innerHTML='❌ السماح مرفوض<br>دوسي على القفل 🔒 فوق > الأذونات > الكاميرا > سماح > وبعدين دوسي الزرار تاني';
+alert('الكاميرا مقفولة - دوسي على القفل فوق واعملي سماح');
 }
 }
 </script>
