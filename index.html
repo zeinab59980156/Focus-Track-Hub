@@ -2,22 +2,61 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FocusTrack Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocusTrack - كاميرا التركيز</title>
 <style>
-body{text-align:center;font-family:Tahoma;padding:25px;background:#eef2ff}
-.card{background:white;max-width:400px;margin:20px auto;padding:25px;border-radius:20px;box-shadow:0 5px 20px #0002}
-a{display:block;padding:16px;margin:12px 0;border-radius:12px;color:white;text-decoration:none;font-weight:bold}
-.a1{background:#4f46e5}
-.a2{background:#111}
+body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
+.card{background:#1e293b;padding:20px;border-radius:20px;max-width:500px;margin:auto;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+video{width:100%;border-radius:15px;background:#000;margin:15px 0;transform:scaleX(-1)}
+button{background:#8b5cf6;color:white;border:none;padding:12px 25px;border-radius:10px;font-size:18px;cursor:pointer;margin:5px}
+button:hover{background:#7c3aed}
+.status{margin-top:15px;padding:10px;border-radius:8px;background:#334155}
 </style>
 </head>
 <body>
-<h1>FocusTrack</h1>
-<p>مشروع قياس التركيز بالذكاء الاصطناعي</p>
+<h1>🎯 FocusTrack Hub</h1>
+<p>مشروع كشف التركيز بالكاميرا</p>
+
 <div class="card">
-<a class="a1" href="https://moazmagdy19.github.io/FocusTrack/">📘 النسخة الأساسية</a>
-<a class="a2" href="https://ismaeiladel.github.io/FocusTrack-AI/">🚀 النسخة المطورة AI</a>
+<video id="video" autoplay playsinline></video>
+<canvas id="canvas" style="display:none"></canvas>
+
+<button onclick="startCamera()">📷 شغلي الكاميرا</button>
+<button onclick="stopCamera()">⏹️ اقفليها</button>
+
+<div class="status" id="status">دوسي "شغلي الكاميرا" عشان نبدأ</div>
+<h3 id="focus">حالة التركيز: بانتظار التشغيل</h3>
 </div>
+
+<script>
+let stream;
+let video = document.getElementById('video');
+let statusText = document.getElementById('status');
+let focusText = document.getElementById('focus');
+
+async function startCamera(){
+try{
+stream = await navigator.mediaDevices.getUserMedia({video:true});
+video.srcObject = stream;
+statusText.innerHTML = "✅ الكاميرا شغالة";
+focusText.innerHTML = "👀 مركزة الآن - برافو!";
+focusText.style.color = "#22c55e";
+statusText.style.background = "#14532d";
+}catch(err){
+statusText.innerHTML = "❌ لازم تسمحي للكاميرا من المتصفح";
+alert("دوسي Allow لما يطلب الكاميرا");
+}
+}
+
+function stopCamera(){
+if(stream){
+stream.getTracks().forEach(t=>t.stop());
+video.srcObject = null;
+statusText.innerHTML = "⏸️ الكاميرا مقفولة";
+focusText.innerHTML = "حالة التركيز: متوقفة";
+focusText.style.color = "white";
+}
+}
+</script>
 </body>
 </html>
