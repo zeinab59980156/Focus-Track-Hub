@@ -3,45 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Focus Track Hub</title>
-<style>
-  body{font-family:sans-serif;background:#0f172a;color:white;margin:0;padding:20px;text-align:center}
-  h1{color:#38bdf8}
-  #container{position:relative;max-width:640px;margin:20px auto;border:3px solid #38bdf8;border-radius:20px;overflow:hidden;background:black}
-  video{width:100%;transform:scaleX(-1);display:block}
-  canvas{position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(-1)}
-  #stats{display:flex;justify-content:space-around;margin-top:20px;flex-wrap:wrap;gap:10px}
-  .card{background:#1e293b;padding:15px 20px;border-radius:15px;min-width:140px}
-  .card h3{margin:5px 0;color:#94a3b8;font-size:14px}
-  .card p{margin:0;font-size:28px;font-weight:bold}
-  button{background:#38bdf8;color:#0f172a;border:none;padding:15px 35px;font-size:18px;border-radius:50px;font-weight:bold;cursor:pointer;margin-top:15px}
-  #status{margin-top:15px;color:#facc15}
-  .low{color:#ef4444 !important;animation:blink 0.8s infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-</style>
+<title>منصة Focus Track Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<style>
+*{font-family:'Cairo',sans-serif;box-sizing:border-box}
+body{background:#f0f7ff;margin:0}
+header{background:linear-gradient(135deg,#2563eb,#1e40af);color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center}
+main{display:grid;grid-template-columns:280px 1fr;gap:20px;max-width:1300px;margin:20px auto;padding:0 15px}
+@media(max-width:800px){main{grid-template-columns:1fr}}
+.sidebar{background:white;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(37,99,235,0.1);border-top:5px solid #2563eb}
+.content{background:white;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(37,99,235,0.1)}
+#container{position:relative;width:100%;max-width:700px;margin:20px auto;background:#000;border-radius:16px;overflow:hidden;border:3px solid #2563eb;aspect-ratio:4/3}
+video{width:100%;transform:scaleX(-1);display:block}canvas{position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(-1)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px}
+.card{background:#f8fbff;border:2px solid #dbeafe;border-radius:14px;padding:15px;text-align:center}
+.card p{font-size:24px;font-weight:800;color:#1e40af}
+.btn-primary{background:linear-gradient(135deg,#2563eb,#1e40af);color:white;border:none;padding:14px 28px;border-radius:12px;font-weight:700;cursor:pointer}
+#statusBox{background:#eff6ff;border:2px dashed #93c5fd;border-radius:12px;padding:12px;margin-top:15px;text-align:center;font-weight:600}
+.card.low-focus{border-color:#ef4444;background:#fef2f2;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+</style>
 </head>
 <body>
-<h1>🎯 Focus Track Hub</h1>
-<p>التركيز من اتجاه العين وحركة الرأس وملامح الوجه</p>
-<button id="startBtn">▶ بدء متابعة التركيز - شغلي الكاميرا الحقيقية</button>
-<p id="status">دوسي الزرار واقفلي فقاعات الشات</p>
-<div id="container"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div>
-<div id="stats">
-  <div class="card"><h3>نسبة التركيز</h3><p id="focusValue">--%</p></div>
-  <div class="card"><h3>اتجاه العين</h3><p id="eyeDir" style="font-size:18px">--</p></div>
-  <div class="card"><h3>حركة الرأس</h3><p id="headDir" style="font-size:18px">--</p></div>
-  <div class="card"><h3>حالة العين</h3><p id="eyeState" style="font-size:18px">--</p></div>
+<header>
+<div>🇪🇬 Focus Track Hub - منصة متابعة التركيز</div>
+<div style="background:rgba(255,255,255,0.2);padding:6px 14px;border-radius:30px">👩‍🎓 زينب طالب</div>
+</header>
+<main>
+<div class="sidebar">
+<h3 style="color:#2563eb">📚 القائمة الرئيسية</h3>
+<div style="background:#2563eb;color:white;padding:12px;border-radius:10px;margin:6px 0">🏠 الرئيسية</div>
+<div style="padding:12px">🎯 متابعة التركيز مباشر</div>
+<div style="padding:12px">📊 التقارير</div>
+<div style="padding:12px">📝 واجباتي</div>
+<hr>
+<p style="font-size:13px;line-height:1.8">• <b>اتجاه العين:</b> هل تنظر للشاشة؟<br>• <b>حركة الرأس:</b> هل تلف رأسك؟<br>• <b>ملامح الوجه:</b> هل عينك مقفولة؟</p>
 </div>
+<div class="content">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><h2 style="color:#1e40af">🎥 جلسة التركيز المباشر</h2><button id="startBtn" class="btn-primary">▶ بدء متابعة التركيز - شغلي الكاميرا الحقيقية</button></div>
+<div id="statusBox">اضغطي بدء واسمحي للكاميرا</div>
+<div id="container"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div>
+<div class="stats">
+<div class="card" id="cardFocus"><h4>نسبة التركيز</h4><p id="focusValue">--%</p></div>
+<div class="card"><h4>👁️ اتجاه العين</h4><p id="eyeDir">--</p></div>
+<div class="card"><h4>🧠 حركة الرأس</h4><p id="headDir">--</p></div>
+<div class="card"><h4>😊 حالة الوجه</h4><p id="eyeState">--</p></div>
+</div>
+<audio id="alertAudio" preload="auto"><source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+</div>
+</main>
 <script>
-const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d'),focusValue=document.getElementById('focusValue'),eyeDirEl=document.getElementById('eyeDir'),headDirEl=document.getElementById('headDir'),eyeStateEl=document.getElementById('eyeState'),statusEl=document.getElementById('status');
-let lastBeep=0,audioCtx;
-function beep(){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=880;o.connect(g);g.connect(audioCtx.destination);g.gain.setValueAtTime(0.8,audioCtx.currentTime);o.start();o.stop(audioCtx.currentTime+0.4);if(navigator.vibrate)navigator.vibrate([300,100,300]);}catch(e){}}
-function calcFocus(l){const nose=l[1],eyeTop=l[159],eyeBottom=l[145],forehead=l[10],chin=l[152],mouthTop=l[13],mouthBottom=l[14];let score=100,eyeDir='للشاشة ✅',headDir='ثابت ✅',eyeState='مفتوحة ✅';const yaw=nose.x-0.5;if(Math.abs(yaw)>0.12){score-=35;eyeDir=yaw>0?'يمين ➡️':'شمال ⬅️';headDir='لافف راسك';}const pitch=forehead.y-chin.y;if(pitch<0.22||pitch>0.38){score-=25;headDir=pitch<0.22?'موطي راسك ⬇️':'رافع راسك ⬆️';}const eyeOpen=Math.abs(eyeTop.y-eyeBottom.y);if(eyeOpen<0.008){score-=45;eyeState='مقفولة 😴';}else if(eyeOpen<0.012){score-=15;eyeState='هتنامي';}const mouthOpen=Math.abs(mouthTop.y-mouthBottom.y);if(mouthOpen>0.05){score-=10;eyeState='تثاؤب 🥱';}return{score:Math.max(0,Math.min(100,Math.round(score))),eyeDir,headDir,eyeState};}
-function onResults(r){canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(r.image,0,0,canvas.width,canvas.height);if(r.multiFaceLandmarks&&r.multiFaceLandmarks.length>0){const res=calcFocus(r.multiFaceLandmarks[0]);focusValue.textContent=res.score+'%';eyeDirEl.textContent=res.eyeDir;headDirEl.textContent=res.headDir;eyeStateEl.textContent=res.eyeState;if(res.score>=70){focusValue.style.color='#22c55e';focusValue.classList.remove('low');statusEl.textContent='ممتاز! مركزة ✅';}else if(res.score>=50){focusValue.style.color='#facc15';focusValue.classList.remove('low');statusEl.textContent='ركزي شوية ⚠️';}else{focusValue.style.color='#ef4444';focusValue.classList.add('low');statusEl.textContent='تركيزك قل عن 50% - ارجعي للشاشة! 🔔';if(Date.now()-lastBeep>2500){beep();lastBeep=Date.now();}}}else{focusValue.textContent='0%';statusEl.textContent='مش شايف وشك - اقربي';}}
-const faceMesh=new FaceMesh({locateFile:(f)=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.6,minTrackingConfidence:0.6});faceMesh.onResults(onResults);
-document.getElementById('startBtn').onclick=async()=>{statusEl.textContent='بشغل الكاميرا...';try{const cam=new Camera(video,{onFrame:async()=>{await faceMesh.send({image:video});},width:640,height:480});await cam.start();statusEl.textContent='الكاميرا شغالة';document.getElementById('startBtn').style.display='none';}catch(e){statusEl.textContent='فشل: '+e.message;}};
+const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d'),focusValue=document.getElementById('focusValue'),eyeDirEl=document.getElementById('eyeDir'),headDirEl=document.getElementById('headDir'),eyeStateEl=document.getElementById('eyeState'),statusBox=document.getElementById('statusBox'),cardFocus=document.getElementById('cardFocus'),alertAudio=document.getElementById('alertAudio');let lastBeep=0,audioCtx;function playAlert(){const now=Date.now();if(now-lastBeep<3000)return;lastBeep=now;alertAudio.currentTime=0;alertAudio.play().catch(()=>{});try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.setValueAtTime(900,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(400,audioCtx.currentTime+0.5);g.gain.setValueAtTime(0.9,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.6);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+0.6);}catch(e){}if(navigator.vibrate)navigator.vibrate([400,100,400,100,600]);}function calcFocus(l){let score=100,eyeDir='للشاشة ✅',headDir='ثابت ✅',eyeState='مفتوحة ✅';const nose=l[1],eyeTop=l[159],eyeBottom=l[145],forehead=l[10],chin=l[152],mouthTop=l[13],mouthBottom=l[14];const yaw=nose.x-0.5;if(Math.abs(yaw)>0.14){score-=35;eyeDir=yaw>0?'يمين ➡️':'شمال ⬅️';headDir='لافف راسك';}const pitch=forehead.y-chin.y;if(pitch<0.20){score-=30;headDir='موطي ⬇️';}else if(pitch>0.40){score-=20;headDir='رافع ⬆️';}const eyeOpen=Math.abs(eyeTop.y-eyeBottom.y);if(eyeOpen<0.006){score-=50;eyeState='مقفولة 😴';}else if(eyeOpen<0.010){score-=25;eyeState='شبه مقفولة';}const mouthOpen=Math.abs(mouthTop.y-mouthBottom.y);if(mouthOpen>0.06){score-=15;eyeState='تثاؤب 🥱';}return{score:Math.max(0,Math.min(100,Math.round(score))),eyeDir,headDir,eyeState};}function onResults(r){canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(r.image,0,0,canvas.width,canvas.height);if(r.multiFaceLandmarks&&r.multiFaceLandmarks.length>0){const res=calcFocus(r.multiFaceLandmarks[0]);focusValue.textContent=res.score+'%';eyeDirEl.textContent=res.eyeDir;headDirEl.textContent=res.headDir;eyeStateEl.textContent=res.eyeState;if(res.score>=70){focusValue.style.color='#16a34a';statusBox.textContent='ممتاز! مركزة ✅ '+res.score+'%';}else if(res.score>=50){focusValue.style.color='#d97706';statusBox.textContent='ركزي شوية ⚠️ '+res.score+'%';}else{focusValue.style.color='#dc2626';cardFocus.classList.add('low-focus');playAlert();statusBox.textContent='⚠️ تركيزك أقل من 50% - ارجعي! 🔔';}}else{focusValue.textContent='0%';}}const faceMesh=new FaceMesh({locateFile:(f)=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.6,minTrackingConfidence:0.6});faceMesh.onResults(onResults);document.getElementById('startBtn').onclick=async()=>{statusBox.textContent='بشغل...';try{alertAudio.play().then(()=>{alertAudio.pause();}).catch(()=>{});if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')await audioCtx.resume();const cam=new Camera(video,{onFrame:async()=>{await faceMesh.send({image:video});},width:640,height:480});await cam.start();statusBox.textContent='✅ شغالة';document.getElementById('startBtn').style.display='none';}catch(e){statusBox.textContent='فشل: '+e.message;}};
 </script>
 </body>
 </html>
