@@ -1,106 +1,94 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FocusTrack</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script><style>*{font-family:Cairo,sans-serif;box-sizing:border-box}body{margin:0;background:#eef4ff;padding-bottom:100px}header{background:linear-gradient(180deg,#3b82f6,#1d4ed8);color:#fff;padding:14px 12px 18px;text-align:center;border-radius:0 0 20px 20px}header h1{margin:0;font-size:20px;font-weight:800}.tabs{display:flex;justify-content:center;gap:8px}.tab{padding:6px 22px;border-radius:20px;border:none;font-weight:700;font-size:13px;cursor:pointer}.tab.active{background:#fff;color:#1d4ed8}.tab:not(.active){background:rgba(255,255,255,.25);color:#fff}.sub{margin:10px;text-align:center;color:#64748b;font-size:11px}.card{background:#fff;border-radius:16px;padding:14px;margin:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}.page{display:none}.page.active{display:block}.circle{width:140px;height:140px;border-radius:50%;border:10px solid #16a34a;display:flex;align-items:center;justify-content:center}.circle b{font-size:36px;color:#16a34a}.btn-blue{background:#16a34a;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;width:100%;margin-top:12px;cursor:pointer;font-size:18px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px}.cards .card{margin:0;text-align:center;padding:16px 10px}.cards .card b{font-size:22px;display:block}.cards .card span{font-size:12px;color:#64748b}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #2563eb;display:flex;justify-content:space-around;padding:10px 0 14px;z-index:99999}.nav{font-size:12px;color:#64748b;text-align:center;cursor:pointer;padding:8px 16px;border-radius:12px;font-weight:700}.nav.active{color:#fff;background:#2563eb}.nav div{font-size:22px}
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FocusTrack</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script><style>*{font-family:Cairo,sans-serif;box-sizing:border-box}body{margin:0;background:#eef4ff;padding-bottom:110px}header{background:linear-gradient(180deg,#3b82f6,#1d4ed8);color:#fff;padding:14px 12px 18px;text-align:center;border-radius:0 0 20px 20px}header h1{margin:0;font-size:20px;font-weight:800}.tabs{display:flex;justify-content:center;gap:8px}.tab{padding:6px 22px;border-radius:20px;border:none;font-weight:700;font-size:13px;cursor:pointer}.tab.active{background:#fff;color:#1d4ed8}.tab:not(.active){background:rgba(255,255,255,.25);color:#fff}.card{background:#fff;border-radius:16px;padding:14px;margin:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}.page{display:none}.page.active{display:block}.circle{width:140px;height:140px;border-radius:50%;border:10px solid #16a34a;display:flex;align-items:center;justify-content:center}.circle b{font-size:36px;color:#16a34a}.btn-blue{background:#16a34a;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;width:100%;margin-top:12px;cursor:pointer;font-size:18px}.btn-yellow{background:#f59e0b;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;width:100%;margin-top:10px;cursor:pointer;font-size:15px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px}.cards .card{margin:0;text-align:center;padding:16px 10px}.cards .card b{font-size:22px;display:block}.cards .card span{font-size:12px;color:#64748b}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #2563eb;display:flex;justify-content:space-around;padding:12px 0 16px;z-index:99999}.nav{font-size:12px;color:#64748b;text-align:center;cursor:pointer;padding:8px 16px;border-radius:12px;font-weight:700;min-width:60px}.nav.active{color:#fff;background:#2563eb}.nav div{font-size:22px}
 #camBox{position:relative;width:78%;max-width:320px;margin:12px auto;background:#000;border-radius:18px;overflow:hidden;border:3px solid #2563eb;aspect-ratio:3/4;height:400px;display:flex;align-items:center;justify-content:center}video{width:100%;height:100%;object-fit:cover!important;transform:scaleX(-1)}canvas{position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(-1)}
-.alertTone{background:#fee2e2;color:#dc2626;padding:12px;border-radius:10px;text-align:center;font-weight:800;display:none;margin-top:10px;border:2px solid #ef4444;font-size:16px}
+.alertTone{background:#fee2e2;color:#dc2626;padding:12px;border-radius:10px;text-align:center;font-weight:800;display:none;margin-top:10px;border:2px solid #ef4444}
 .bar{height:12px;background:#f1f5f9;border-radius:10px;overflow:hidden;margin-top:8px}.bar-fill{height:12px;border-radius:10px;transition:width .3s}
+.student-row{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #f1f5f9}.student-row:last-child{border:none}
 </style></head><body>
 <header><h1>FocusTrack</h1><p>ركز أكثر، تعلم أفضل</p><div class="tabs"><button id="tabT" class="tab active" onclick="showRoot('teacher')">مدرس</button><button id="tabS" class="tab" onclick="showRoot('student')">طالب</button></div></header>
 
-<div id="teacherRoot"><div class="sub">نموذج تجريبي</div><div id="t-home" class="page active"><div style="display:flex;justify-content:space-between;margin:12px 14px"><h2 style="margin:0;font-size:18px">لوحة متابعة الطلاب</h2><button style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-weight:700" onclick="goT('reports')">إنهاء الحصة</button></div><div class="cards"><div class="card"><b id="avg1" style="color:#2563eb">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b id="good1" style="color:#16a34a">18</b><span>طلاب بتركيز جيد</span></div><div class="card"><b id="need1" style="color:#f59e0b">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b style="color:#2563eb">24</b><span>عدد الطلاب</span></div></div></div>
-<div id="t-students" class="page"><div class="card" style="text-align:center"><b>الطلاب - 24 طالب</b></div></div><div id="t-stats" class="page"><div class="card"><b>إحصائيات الفصل - متوسط <span id="avg2">76%</span></b></div></div><div id="t-alerts" class="page"><div class="card">التنبيهات</div></div><div id="t-reports" class="page"><div class="card">التقارير - الحصة انتهت</div></div>
+<div id="teacherRoot">
+<div id="t-home" class="page active"><div style="display:flex;justify-content:space-between;margin:12px 14px"><h2 style="margin:0;font-size:18px">لوحة متابعة الطلاب</h2><button style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-weight:700" onclick="goT('reports')">إنهاء الحصة</button></div><div class="cards"><div class="card"><b id="avg1" style="color:#2563eb">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b id="good1" style="color:#16a34a">18</b><span>طلاب بتركيز جيد</span></div><div class="card"><b id="need1" style="color:#f59e0b">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b style="color:#2563eb">24</b><span>عدد الطلاب</span></div></div><div class="card"><b>أخر التنبيهات</b><div id="t-home-alerts" style="margin-top:8px;font-size:13px">لا يوجد تنبيهات - الفصل مركز ✅</div></div></div>
+
+<div id="t-students" class="page"><div class="card" style="text-align:center"><b>قائمة الطلاب - 24 طالب</b></div><div id="t-students-list" class="card"></div></div>
+
+<div id="t-stats" class="page"><div class="card"><b>إحصائيات الفصل</b><p>متوسط التركيز <b id="avg2" style="color:#2563eb">76%</b></p><div class="bar"><div id="avgBar" class="bar-fill" style="width:76%;background:#2563eb"></div></div><div style="margin-top:12px"><p>📊 أعلى تركيز: أحمد 91%</p><p>📉 أقل تركيز: محمد 64%</p><p>⏱ مدة الحصة: 45 دقيقة</p></div></div></div>
+
+<div id="t-alerts" class="page"><div class="card"><b>التنبيهات</b><div id="t-alerts-list" style="margin-top:10px">لا يوجد تنبيهات حاليا ✅<br><br>سيظهر هنا تنبيه عندما يقل تركيز طالب عن 40%</div></div></div>
+
+<div id="t-reports" class="page"><div class="card" style="text-align:center"><b>التقارير</b><p style="margin-top:12px">تم إنهاء الحصة</p><p>متوسط تركيز الفصل: <span id="avg3">76%</span></p><button class="btn-blue" onclick="goT('home')" style="background:#2563eb">العودة للرئيسية</button></div></div>
+
 <div class="bottom" id="t-bottom"><div id="nt-home" class="nav active" onclick="goT('home')"><div>🏠</div>الرئيسية</div><div id="nt-students" class="nav" onclick="goT('students')"><div>👥</div>الطلاب</div><div id="nt-stats" class="nav" onclick="goT('stats')"><div>📊</div>إحصائيات</div><div id="nt-alerts" class="nav" onclick="goT('alerts')"><div>🔔</div>التنبيهات</div><div id="nt-reports" class="nav" onclick="goT('reports')"><div>📄</div>التقارير</div></div></div>
 
-<div id="studentRoot" style="display:none"><div class="sub">نموذج تجريبي</div>
-<div id="s-home" class="page active"><div class="card" style="text-align:center"><div id="circle" class="circle" style="margin:auto"><b id="focusCircle">--%</b></div><p id="status" style="font-weight:800;margin-top:8px">مستعد</p><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button></div>
-<div class="card" style="text-align:center"><span id="myAvg">--%</span> تركيزك<div class="bar"><div id="myBar" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div>
-</div>
+<div id="studentRoot" style="display:none">
+<div id="s-home" class="page active"><div class="card" style="text-align:center"><div id="circle" class="circle" style="margin:auto"><b id="focusCircle">--%</b></div><p id="status" style="font-weight:800;margin-top:8px">مستعد</p><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button></div><div class="card" style="text-align:center"><b>تركيزك الحالي</b><div style="font-size:22px;font-weight:800;color:#16a34a" id="myAvg">--%</div><div class="bar"><div id="myBar" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div></div>
 
-<div id="s-track" class="page"><div class="card"><b>الكاميرا 📷</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div></div>
-<div class="card"><b>نسبة التركيز</b><div style="display:flex;justify-content:space-between;font-weight:800"><span>التركيز</span><span id="meterValue">--%</span></div><div class="bar"><div id="meterFill" class="bar-fill" style="width:0%;background:#16a34a"></div></div><p id="meterStatus" style="text-align:center;font-weight:800;margin-top:10px">في انتظار الكاميرا</p></div>
-</div>
+<div id="s-track" class="page"><div class="card"><b>الكاميرا - معايرة وشك المستقيم 📍</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div><button id="calibBtn" class="btn-yellow" onclick="calibrateNow()">📍 اضغطي هنا وانتِ وشك مستقيم زي الصورة</button></div><div class="card"><b>نسبة التركيز</b><div style="display:flex;justify-content:space-between;font-weight:800"><span>التركيز</span><span id="meterValue" style="color:#16a34a">--%</span></div><div class="bar"><div id="meterFill" class="bar-fill" style="width:0%;background:#16a34a"></div></div><p id="meterStatus" style="text-align:center;font-weight:800;margin-top:10px">في انتظار الكاميرا</p></div></div>
 
-<div id="s-stats" class="page"><div class="card"><b>إحصائياتي</b><div class="card" style="text-align:center"><span id="myAvg2">--%</span><div class="bar"><div id="myBar2" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div></div></div>
-<div id="s-settings" class="page"><div class="card"><b>المنطق النهائي ✅</b><p style="line-height:2.2">✅ وش مستقيم + عين مفتوحة = <b style="color:#16a34a">ساكت 100%</b><br>🔔 وش معوج او عين مقفولة = <b style="color:#dc2626">يرن</b><br>🔇 اول ما يرجع مستقيم الرنة تقف فورا</p></div></div>
+<div id="s-stats" class="page"><div class="card"><b>إحصائياتي</b><p>تركيزك الحالي</p><div style="font-size:28px;font-weight:800;color:#16a34a;text-align:center" id="myAvg2">--%</div><div class="bar"><div id="myBar2" class="bar-fill" style="width:0%;background:#16a34a"></div></div><div style="margin-top:14px;font-size:13px;line-height:2"><p>✅ وقت التركيز: 32 دقيقة</p><p>⚠️ وقت عدم التركيز: 5 دقائق</p><p>🎯 نسبة الإنجاز: 85%</p></div></div></div>
+
+<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><p style="line-height:2.2;margin-top:10px">✅ وش مستقيم + عين مفتوحة = ساكت<br>🔔 وش معوج او عين مقفولة = يرن<br>🔇 يوقف فورا لما ترجع مستقيم<br><br>📍 لو وشك مستقيم وبيرن دوسي زرار المعايرة في صفحة المتابعة</p><button class="btn-yellow" onclick="localStorage.clear();location.reload()">🔄 إعادة ضبط المعايرة</button></div></div>
 
 <div class="bottom" id="s-bottom" style="display:none"><div id="ns-home" class="nav active" onclick="goS('home')"><div>🏠</div>الرئيسية</div><div id="ns-track" class="nav" onclick="goS('track')"><div>🎥</div>متابعة</div><div id="ns-stats" class="nav" onclick="goS('stats')"><div>📊</div>إحصائيات</div><div id="ns-settings" class="nav" onclick="goS('settings')"><div>⚙️</div>الإعدادات</div></div></div>
 
 <script>
-let students=[{name:"أحمد",focus:87},{name:"محمد",focus:64},{name:"سارة",focus:82},{name:"علي",focus:91}];
-function renderT(){let avg=Math.round(students.reduce((a,b)=>a+b.focus,0)/students.length);document.getElementById('avg1').textContent=avg+'%';document.getElementById('avg2').textContent=avg+'%';}
+let students=[
+{name:"أحمد محمد",focus:91,status:"ممتاز"},
+{name:"سارة علي",focus:82,status:"جيد"},
+{name:"محمد أحمد",focus:64,status:"يحتاج متابعة"},
+{name:"علي حسن",focus:78,status:"جيد"},
+{name:"زينب محمود",focus:88,status:"ممتاز"},
+{name:"فاطمة خالد",focus:74,status:"جيد"}
+];
+function renderT(){
+ let avg=Math.round(students.reduce((a,b)=>a+b.focus,0)/students.length);
+ let e1=document.getElementById('avg1'),e2=document.getElementById('avg2'),e3=document.getElementById('avg3'),eb=document.getElementById('avgBar');
+ if(e1) e1.textContent=avg+'%'; if(e2) e2.textContent=avg+'%'; if(e3) e3.textContent=avg+'%'; if(eb) eb.style.width=avg+'%';
+ let list=document.getElementById('t-students-list');
+ if(list){
+   list.innerHTML=students.map(s=>`<div class="student-row"><span>${s.name} - ${s.status}</span><b style="color:${s.focus>=80?'#16a34a':s.focus>=60?'#f59e0b':'#ef4444'}">${s.focus}%</b></div>`).join('');
+ }
+}
 renderT();
-function showRoot(r){if(r==='teacher'){teacherRoot.style.display='block';studentRoot.style.display='none';tabT.classList.add('active');tabS.classList.remove('active');tBottom.style.display='flex';sBottom.style.display='none';goT('home');}else{teacherRoot.style.display='none';studentRoot.style.display='block';tabS.classList.add('active');tabT.classList.remove('active');tBottom.style.display='none';sBottom.style.display='flex';goS('home');}}
-function goT(n){document.querySelectorAll('#teacherRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#t-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('t-'+n)?.classList.add('active');document.getElementById('nt-'+n)?.classList.add('active');}
-function goS(n){document.querySelectorAll('#studentRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#s-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+n)?.classList.add('active');document.getElementById('ns-'+n)?.classList.add('active');}
+function showRoot(r){if(r==='teacher'){document.getElementById('teacherRoot').style.display='block';document.getElementById('studentRoot').style.display='none';document.getElementById('tabT').classList.add('active');document.getElementById('tabS').classList.remove('active');document.getElementById('t-bottom').style.display='flex';document.getElementById('s-bottom').style.display='none';goT('home');}else{document.getElementById('teacherRoot').style.display='none';document.getElementById('studentRoot').style.display='block';document.getElementById('tabS').classList.add('active');document.getElementById('tabT').classList.remove('active');document.getElementById('t-bottom').style.display='none';document.getElementById('s-bottom').style.display='flex';goS('home');}}
+function goT(n){document.querySelectorAll('#teacherRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#t-bottom .nav').forEach(x=>x.classList.remove('active'));let pg=document.getElementById('t-'+n);let nb=document.getElementById('nt-'+n);if(pg) pg.classList.add('active');if(nb) nb.classList.add('active');}
+function goS(n){document.querySelectorAll('#studentRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#s-bottom .nav').forEach(x=>x.classList.remove('active'));let pg=document.getElementById('s-'+n);let nb=document.getElementById('ns-'+n);if(pg) pg.classList.add('active');if(nb) nb.classList.add('active');}
 
-const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
-const focusCircle=document.getElementById('focusCircle'),meterStatus=document.getElementById('meterStatus'),toneAlert=document.getElementById('toneAlert'),statusEl=document.getElementById('status'),myAvg=document.getElementById('myAvg'),myAvg2=document.getElementById('myAvg2'),myBar=document.getElementById('myBar'),myBar2=document.getElementById('myBar2'),meterValue=document.getElementById('meterValue'),meterFill=document.getElementById('meterFill'),circle=document.getElementById('circle');
-let audioCtx=null,lastBeep=0,activeOs=[];
+const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d'),focusCircle=document.getElementById('focusCircle'),meterStatus=document.getElementById('meterStatus'),toneAlert=document.getElementById('toneAlert'),statusEl=document.getElementById('status'),myAvg=document.getElementById('myAvg'),myAvg2=document.getElementById('myAvg2'),myBar=document.getElementById('myBar'),myBar2=document.getElementById('myBar2'),meterValue=document.getElementById('meterValue'),meterFill=document.getElementById('meterFill'),circle=document.getElementById('circle');
+let audioCtx=null,lastBeep=0,activeOs=[],baselineYaw=null,baselinePitch=null,baselineEye=null,calibrated=false,cEye=0,cTilt=0;
+
+function calibrateNow(){
+ if(baselineYaw===null){alert('استني الكاميرا تشتغل الأول');return;}
+ localStorage.setItem('yaw0',baselineYaw);localStorage.setItem('pitch0',baselinePitch);localStorage.setItem('eye0',baselineEye);
+ calibrated=true;document.getElementById('calibBtn').textContent='✅ تمت المعايرة - وشك ده هو المستقيم';document.getElementById('calibBtn').style.background='#16a34a';
+ meterStatus.textContent='✅ تمت المعايرة - دلوقتي لو مستقيم مش هيرن';setTimeout(()=>{document.getElementById('calibBtn').style.display='none';},2500);
+}
 function stopBeep(){try{activeOs.forEach(o=>{try{o.stop()}catch{}});activeOs=[];toneAlert.style.display='none';}catch{}}
-function beepHigh(msg){const now=Date.now();if(now-lastBeep<800)return;lastBeep=now;try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();stopBeep();for(let i=0;i<2;i++){const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='square';o.frequency.value=1200;g.gain.setValueAtTime(0,audioCtx.currentTime+i*0.15);g.gain.linearRampToValueAtTime(0.6,audioCtx.currentTime+i*0.15+0.02);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+i*0.15+0.3);o.start(audioCtx.currentTime+i*0.15);o.stop(audioCtx.currentTime+i*0.15+0.3);activeOs.push(o);}toneAlert.style.display='block';toneAlert.textContent='🔔🔔 '+msg;if(navigator.vibrate)navigator.vibrate(200);}catch{}}
-
+function beepHigh(msg){const now=Date.now();if(now-lastBeep<900)return;lastBeep=now;try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();stopBeep();for(let i=0;i<2;i++){const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='square';o.frequency.value=1200;g.gain.setValueAtTime(0,audioCtx.currentTime+i*0.15);g.gain.linearRampToValueAtTime(0.6,audioCtx.currentTime+i*0.15+0.02);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+i*0.15+0.3);o.start(audioCtx.currentTime+i*0.15);o.stop(audioCtx.currentTime+i*0.15+0.3);activeOs.push(o);}toneAlert.style.display='block';toneAlert.textContent='🔔🔔 '+msg;if(navigator.vibrate)navigator.vibrate(200);}catch{}}
 function calc(l){
-  const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152];
-  const yaw=nose.x-0.5, eyeOpen=Math.abs(eyeT.y-eyeB.y), pitch=fore.y-chin.y;
-  let isEyeClosed=eyeOpen<0.012, isTilt=false;
-  if(Math.abs(yaw)>0.09) isTilt=true;
-  if(pitch<0.25||pitch>0.45) isTilt=true;
-  let score=100; if(isEyeClosed) score-=70; if(isTilt) score-=50;
-  if(score<0) score=0;
-  return{score,isEyeClosed,isTilt};
+ const nose=l[1],leftEye=l[33],rightEye=l[263],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152];
+ const eyesCenterX=(leftEye.x+rightEye.x)/2;const yaw=nose.x-eyesCenterX;const pitch=fore.y-chin.y;const eyeOpen=Math.abs(eyeT.y-eyeB.y);
+ if(baselineYaw===null){baselineYaw=yaw;baselinePitch=pitch;baselineEye=eyeOpen;const y0=localStorage.getItem('yaw0'),p0=localStorage.getItem('pitch0'),e0=localStorage.getItem('eye0');if(y0){baselineYaw=parseFloat(y0);baselinePitch=parseFloat(p0);baselineEye=parseFloat(e0);calibrated=true;}}
+ if(!calibrated){baselineYaw=baselineYaw*0.95+yaw*0.05;baselinePitch=baselinePitch*0.95+pitch*0.05;baselineEye=baselineEye*0.95+eyeOpen*0.05;}
+ const dYaw=Math.abs(yaw-baselineYaw);const dPitch=Math.abs(pitch-baselinePitch);
+ let isEyeClosed=eyeOpen < baselineEye*0.55;let isTilt=false;if(dYaw>0.07) isTilt=true;if(dPitch>0.12) isTilt=true;
+ let score=100;if(isEyeClosed) score=15;else if(isTilt) score=50;else score=95;
+ return{score,isEyeClosed,isTilt,dYaw,dPitch};
 }
-
-let cEye=0,cTilt=0;
 function onResults(r){
-  canvas.width=video.videoWidth; canvas.height=video.videoHeight; ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(r.multiFaceLandmarks && r.multiFaceLandmarks[0]){
-    const lm=r.multiFaceLandmarks[0];
-    let minX=1,minY=1,maxX=0,maxY=0; lm.forEach(p=>{minX=Math.min(minX,p.x);minY=Math.min(minY,p.y);maxX=Math.max(maxX,p.x);maxY=Math.max(maxY,p.y);});
-    const x=minX*canvas.width,y=minY*canvas.height,w=(maxX-minX)*canvas.width,h=(maxY-minY)*canvas.height; ctx.strokeStyle='#22c55e'; ctx.lineWidth=3; ctx.strokeRect(x,y,w,h);
-    const res=calc(lm);
-
-    focusCircle.textContent=res.score+'%'; myAvg.textContent=res.score+'%'; myAvg2.textContent=res.score+'%';
-    myBar.style.width=res.score+'%'; myBar2.style.width=res.score+'%'; meterValue.textContent=res.score+'%'; meterFill.style.width=res.score+'%';
-    meterFill.style.background=res.score>=70?'#16a34a':res.score>=40?'#f59e0b':'#ef4444';
-    circle.style.borderColor=res.score>=50?'#16a34a':'#ef4444'; focusCircle.style.color=res.score>=50?'#16a34a':'#ef4444';
-    students[2].focus=res.score; renderT();
-
-    // المنطق اللي طلبتيه بالظبط
-    if(res.isEyeClosed){
-      cEye++; cTilt=0;
-      if(cEye>6){
-        meterStatus.textContent='👁️ عينك مقفولة! تركيزك '+res.score+'%'; meterStatus.style.color='#dc2626';
-        statusEl.textContent='👁️ عينك مقفولة!';
-        beepHigh('عينك مقفولة!');
-      }
-    }else if(res.isTilt){
-      cTilt++; cEye=0;
-      if(cTilt>8){
-        meterStatus.textContent='↔️ وشك معوج! تركيزك '+res.score+'%'; meterStatus.style.color='#d97706';
-        statusEl.textContent='↔️ وشك معوج!';
-        beepHigh('وشك معوج!');
-      }
-    }else{
-      // وش مستقيم + عين مفتوحة = ساكت 100% - ده اللي اكدتي عليه
-      cEye=0; cTilt=0;
-      stopBeep();
-      meterStatus.textContent='✅ وشك مستقيم - تركيزك '+res.score+'% - مفيش رنة'; meterStatus.style.color='#16a34a';
-      statusEl.textContent='✅ وشك مستقيم - مفيش رنة - '+res.score+'%';
-    }
-  }
+ canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.clearRect(0,0,canvas.width,canvas.height);
+ if(r.multiFaceLandmarks && r.multiFaceLandmarks[0]){
+  const lm=r.multiFaceLandmarks[0];let minX=1,minY=1,maxX=0,maxY=0;lm.forEach(p=>{minX=Math.min(minX,p.x);minY=Math.min(minY,p.y);maxX=Math.max(maxX,p.x);maxY=Math.max(maxY,p.y);});const x=minX*canvas.width,y=minY*canvas.height,w=(maxX-minX)*canvas.width,h=(maxY-minY)*canvas.height;ctx.strokeStyle='#22c55e';ctx.lineWidth=3;ctx.strokeRect(x,y,w,h);
+  const res=calc(lm);focusCircle.textContent=res.score+'%';if(myAvg)myAvg.textContent=res.score+'%';if(myAvg2)myAvg2.textContent=res.score+'%';if(myBar)myBar.style.width=res.score+'%';if(myBar2)myBar2.style.width=res.score+'%';if(meterValue)meterValue.textContent=res.score+'%';if(meterFill)meterFill.style.width=res.score+'%';meterFill.style.background=res.score>=70?'#16a34a':res.score>=40?'#f59e0b':'#ef4444';circle.style.borderColor=res.score>=70?'#16a34a':'#ef4444';focusCircle.style.color=res.score>=70?'#16a34a':'#ef4444';students[2].focus=res.score;renderT();
+  if(!calibrated && baselineYaw!==null){meterStatus.textContent='⏳ بيتعاير على وشك... خليكي مستقيمة 3 ثواني';meterStatus.style.color='#2563eb';return;}
+  if(res.isEyeClosed){cEye++;cTilt=0;if(cEye>6){meterStatus.textContent='👁️ عينك مقفولة! '+res.score+'%';meterStatus.style.color='#dc2626';statusEl.textContent='عينك مقفولة!';beepHigh('عينك مقفولة!');}}
+  else if(res.isTilt){cTilt++;cEye=0;if(cTilt>8){meterStatus.textContent='↔️ راسك مال! '+res.score+'%';meterStatus.style.color='#d97706';statusEl.textContent='راسك مال!';beepHigh('راسك مال!');}}
+  else{cEye=0;cTilt=0;stopBeep();meterStatus.textContent='✅ وشك مستقيم - '+res.score+'% - مفيش رنة';meterStatus.style.color='#16a34a';statusEl.textContent='✅ مستقيم - مفيش رنة - '+res.score+'%';}
+ }
 }
-
 const faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
-faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.2,minTrackingConfidence:0.2});
+faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.3,minTrackingConfidence:0.3});
 faceMesh.onResults(onResults);
-
-async function startCam(){
-  try{
-    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"},audio:false});
-    video.srcObject=s; await video.play(); canvas.width=video.videoWidth; canvas.height=video.videoHeight;
-    goS('track'); meterStatus.textContent='✅ وشك مستقيم = مفيش رنة';
-    async function loop(){if(video.readyState>=2) await faceMesh.send({image:video}); requestAnimationFrame(loop);} loop();
-  }catch(e){alert('اسمحي للكاميرا 🔒');}
-}
+async function startCam(){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"},audio:false});video.srcObject=s;await video.play();canvas.width=video.videoWidth;canvas.height=video.videoHeight;goS('track');meterStatus.textContent='⏳ بيتعاير... خلي وشك مستقيم';async function loop(){if(video.readyState>=2) await faceMesh.send({image:video});requestAnimationFrame(loop);}loop();}catch(e){alert('اسمحي للكاميرا 🔒');}}
 document.getElementById('startBtn').onclick=startCam;
 showRoot('teacher');
 </script></body></html>
