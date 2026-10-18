@@ -1,73 +1,93 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FocusTrack</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script><style>*{font-family:Cairo,sans-serif;box-sizing:border-box}body{margin:0;background:#eef4ff;padding-bottom:88px}header{background:linear-gradient(180deg,#3b82f6,#1d4ed8);color:#fff;padding:14px 12px 18px;text-align:center;border-radius:0 0 20px 20px}header h1{margin:0;font-size:20px;font-weight:800}header p{font-size:12px;margin:2px 0 10px;opacity:.9}.tabs{display:flex;justify-content:center;gap:8px}.tab{padding:6px 22px;border-radius:20px;border:none;font-weight:700;font-size:13px;cursor:pointer}.tab.active{background:#fff;color:#1d4ed8}.tab:not(.active){background:rgba(255,255,255,.25);color:#fff}.card{background:#fff;border-radius:16px;padding:14px;margin:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}.page{display:none}.page.active{display:block}.circle-wrap{display:flex;flex-direction:column;align-items:center}.circle{width:140px;height:140px;border-radius:50%;border:10px solid #e5e7eb;display:flex;align-items:center;justify-content:center;flex-direction:column}.circle b{font-size:36px}.badge{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;background:#dcfce7;color:#15803d;margin-top:8px}.btn-blue{background:#16a34a;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;width:100%;margin-top:12px;cursor:pointer;font-size:18px}.top{display:flex;justify-content:space-between;align-items:center;margin:12px 14px}.top h2{margin:0;font-size:17px;font-weight:800}.end{background:#ef4444;color:#fff;border:none;padding:7px 14px;border-radius:10px;font-weight:800;font-size:13px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px}.cards .card{margin:0;text-align:center}.bar{height:8px;background:#f1f5f9;border-radius:10px;overflow:hidden;margin:6px 0}.alertTone{background:#e0f2fe;color:#1d4ed8;padding:8px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:10px;border:1px solid #bfdbfe;font-size:13px}
-#camBox{position:relative;width:72%;max-width:280px;margin:12px auto;background:#000;border-radius:18px;overflow:hidden;border:3px solid #2563eb;aspect-ratio:3/4;height:380px;max-height:48vh;display:flex;align-items:center;justify-content:center}video{width:100%;height:100%;object-fit:cover!important;transform:scaleX(-1);display:block;background:#000}canvas{position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(-1);pointer-events:none}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;padding:6px 0 8px;z-index:99}.nav{font-size:10px;color:#94a3b8;text-align:center;cursor:pointer;padding:4px 10px;border-radius:10px}.nav.active{color:#fff;background:#2563eb}.nav div{font-size:18px}
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FocusTrack</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script><style>*{font-family:Cairo,sans-serif;box-sizing:border-box}body{margin:0;background:#eef4ff;padding-bottom:88px}header{background:linear-gradient(180deg,#3b82f6,#1d4ed8);color:#fff;padding:14px 12px 18px;text-align:center;border-radius:0 0 20px 20px}header h1{margin:0;font-size:20px;font-weight:800}header p{font-size:12px;margin:2px 0 10px;opacity:.9}.tabs{display:flex;justify-content:center;gap:8px}.tab{padding:6px 22px;border-radius:20px;border:none;font-weight:700;font-size:13px;cursor:pointer}.tab.active{background:#fff;color:#1d4ed8}.tab:not(.active){background:rgba(255,255,255,.25);color:#fff}.sub{margin:10px;text-align:center;color:#64748b;font-size:11px}.card{background:#fff;border-radius:16px;padding:14px;margin:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}.page{display:none}.page.active{display:block}.circle-wrap{display:flex;flex-direction:column;align-items:center}.circle{width:140px;height:140px;border-radius:50%;border:10px solid #e5e7eb;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:.3s}.circle b{font-size:36px}.badge{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;background:#dcfce7;color:#15803d;margin-top:8px}.btn-blue{background:#16a34a;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;width:100%;margin-top:12px;cursor:pointer;font-size:18px}.top{display:flex;justify-content:space-between;align-items:center;margin:12px 14px}.top h2{margin:0;font-size:17px;font-weight:800}.end{background:#ef4444;color:#fff;border:none;padding:7px 14px;border-radius:10px;font-weight:800;font-size:13px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px}.cards .card{margin:0;text-align:center}.student-card{background:#fff;border-radius:16px;padding:14px;margin:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:3px solid #e5e7eb}.student-card.good{border-top-color:#16a34a}.student-card.mid{border-top-color:#f59e0b}.student-card.low{border-top-color:#ef4444}.s-head{display:flex;justify-content:space-between;align-items:center}.avatar{width:32px;height:32px;border-radius:50%;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}.badge-s{padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}.badge-s.good{background:#dcfce7;color:#15803d}.badge-s.mid{background:#fef3c7;color:#b45309}.badge-s.low{background:#fee2e2;color:#dc2626}.percent{font-size:28px;font-weight:800;margin:8px 0 4px}.bar{height:8px;background:#f1f5f9;border-radius:10px;overflow:hidden;margin:6px 0}.bar-fill{height:8px;border-radius:10px}.alertTone{background:#e0f2fe;color:#1d4ed8;padding:8px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:10px;border:1px solid #bfdbfe;font-size:13px}
+#camBox{position:relative;width:75%;max-width:300px;margin:12px auto;background:#000;border-radius:18px;overflow:hidden;border:3px solid #2563eb;aspect-ratio:3/4;height:400px;max-height:50vh;display:flex;align-items:center;justify-content:center}video{width:100%;height:100%;object-fit:cover!important;transform:scaleX(-1);display:block;background:#000}canvas{position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(-1);pointer-events:none}
+.ai-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}.alert-box{background:#fff;border-radius:14px;padding:12px 14px;margin:10px 14px;display:flex;justify-content:space-between;box-shadow:0 1px 6px rgba(0,0,0,.05);border-right:4px solid #ef4444}.alert-box.orange{border-right-color:#f59e0b}.report-box{background:#fff;border-radius:16px;padding:18px;margin:12px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06);font-size:13px;line-height:1.8}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;padding:6px 0 8px;z-index:99}.nav{font-size:10px;color:#94a3b8;text-align:center;cursor:pointer;padding:4px 10px;border-radius:10px}.nav.active{color:#fff;background:#2563eb}.nav div{font-size:18px}
 </style></head><body>
 <header><h1>FocusTrack</h1><p>ركز أكثر، تعلم أفضل</p><div class="tabs"><button id="tabT" class="tab active" onclick="showRoot('teacher')">مدرس</button><button id="tabS" class="tab" onclick="showRoot('student')">طالب</button></div></header>
-<div id="teacherRoot"><div id="t-home" class="page active"><div class="top"><h2>لوحة متابعة الطلاب</h2><button class="end" onclick="endClass()">إنهاء الحصة</button></div><div class="cards"><div class="card"><b id="avg1">76%</b><span>متوسط</span></div><div class="card"><b id="good1">18</b><span>جيد</span></div></div><div id="t-home-alerts"></div></div><div id="t-students" class="page"><div class="top"><h2>الطلاب</h2></div><div id="t-students-list"></div></div><div id="t-alerts" class="page"><div class="top"><h2>التنبيهات</h2></div><div id="t-alerts-list"></div></div><div id="t-reports" class="page"><div class="top"><h2>التقارير</h2></div><div id="rep-after" class="card" style="display:none"></div></div><div class="bottom" id="t-bottom"><div id="nt-home" class="nav active" onclick="goT('home')"><div>🏠</div>الرئيسية</div><div id="nt-students" class="nav" onclick="goT('students')"><div>👥</div>الطلاب</div><div id="nt-alerts" class="nav" onclick="goT('alerts')"><div>🔔</div>التنبيهات</div><div id="nt-reports" class="nav" onclick="goT('reports')"><div>📄</div>التقارير</div></div></div>
-<div id="studentRoot" style="display:none"><div id="s-home" class="page active"><div class="card" style="text-align:center"><b>حالة التركيز</b><div class="circle-wrap" style="margin-top:10px"><div id="circle" class="circle"><b id="focusCircle">--%</b></div><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ تشغيل الكاميرا</button></div></div></div>
-<div id="s-track" class="page"><div class="card"><b>الكاميرا - بنغمة اسماعيل 🟩</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas><div id="camPlace" style="position:absolute;color:#fff;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:8px;font-size:12px">بستنى السماح...</div></div><div style="font-size:11px;color:#16a34a;text-align:center;margin-top:6px">✅ نفس نغمة ismaeiladel.github.io/FocusTrack-AI/</div></div></div>
-<div id="s-stats" class="page"><div class="card"><b>إحصائياتي</b><div id="myAvg">--%</div><div class="bar"><div id="myBar" style="width:0%;background:#16a34a;height:8px"></div></div></div></div>
-<div class="bottom" id="s-bottom" style="display:none"><div id="ns-home" class="nav active" onclick="goS('home')"><div>🏠</div>الرئيسية</div><div id="ns-track" class="nav" onclick="goS('track')"><div>🎥</div>متابعة</div><div id="ns-stats" class="nav" onclick="goS('stats')"><div>📊</div>إحصائيات</div></div></div>
 
-<audio id="beep" preload="auto" src="beep.ogg"></audio>
+<div id="teacherRoot"><div class="sub">نموذج تجريبي - جميع البيانات محاكاة</div><div id="t-home" class="page active"><div class="top"><h2>لوحة متابعة الطلاب</h2><button class="end" onclick="endClass()">إنهاء الحصة</button></div><div class="cards"><div class="card"><b id="avg1" style="color:#2563eb">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b id="good1" style="color:#16a34a">18</b><span>طلاب بتركيز جيد</span></div><div class="card"><b id="need1" style="color:#f59e0b">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b style="color:#2563eb">24</b><span>عدد الطلاب</span></div></div><div id="t-home-alerts"></div></div><div id="t-students" class="page"><div class="top"><h2>لوحة متابعة الطلاب</h2></div><div id="t-students-list"></div></div><div id="t-stats" class="page"><div class="top"><h2>إحصائيات الفصل</h2></div><div class="cards"><div class="card"><b>24</b><span>عدد الطلاب</span></div><div class="card"><b id="avg2">76%</b><span>متوسط التركيز</span></div></div></div><div id="t-alerts" class="page"><div class="top"><h2>التنبيهات</h2></div><div id="t-alerts-list"></div></div><div id="t-reports" class="page"><div class="top"><h2>التقارير</h2></div><div id="rep-before" class="report-box" style="text-align:center">لم يتم إنهاء الحصة بعد</div><div id="rep-after" class="report-box" style="display:none"></div></div><div class="bottom" id="t-bottom"><div id="nt-home" class="nav active" onclick="goT('home')"><div>🏠</div>الرئيسية</div><div id="nt-students" class="nav" onclick="goT('students')"><div>👥</div>الطلاب</div><div id="nt-stats" class="nav" onclick="goT('stats')"><div>📊</div>إحصائيات</div><div id="nt-alerts" class="nav" onclick="goT('alerts')"><div>🔔</div>التنبيهات</div><div id="nt-reports" class="nav" onclick="goT('reports')"><div>📄</div>التقارير</div></div></div>
+
+<div id="studentRoot" style="display:none"><div class="sub">نموذج تجريبي</div><div id="s-home" class="page active"><div class="card" style="text-align:center"><b>حالة التركيز</b><div class="circle-wrap" style="margin-top:10px"><div id="circle" class="circle"><b id="focusCircle">--%</b></div><div class="badge"><span id="focusBadge">اضغط بدء</span></div><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button></div></div><div class="card"><b>الحصة الحالية</b><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>مدة التركيز</span><span id="focusTime">--</span></div><div class="bar"><div id="focusBar" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>مدة التشتت</span><span id="lostTime">--</span></div><div class="bar"><div id="lostBar2" class="bar-fill" style="width:0%;background:#f59e0b"></div></div></div></div></div>
+
+<div id="s-track" class="page"><div class="card"><b>معاينة الكاميرا - نغمة حلوة + مربع 🟩</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas><div id="camPlace" style="position:absolute;color:#fff;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:8px;font-size:12px">بستنى السماح...</div></div><div style="font-size:11px;color:#16a34a;text-align:center;margin-top:6px">✅ الكاميرا طبيعية + مربع أخضر + النغمة بعد 3 ثواني</div></div><div class="card"><b>تحليل الذكاء الاصطناعي</b><div class="ai-row"><span>اتجاه العين</span><span id="eyeDir">--</span></div><div class="ai-row"><span>تعبير الوجه</span><span id="faceExp">--</span></div><div class="ai-row"><span>حركة الرأس</span><span id="headMove">--</span></div><div class="ai-row"><span>النتيجة</span><span id="resFocus" style="color:#16a34a;font-weight:800">--</span></div></div></div>
+
+<div id="s-stats" class="page"><div class="card"><b>إحصائياتي</b><div style="margin-top:10px"><div style="display:flex;justify-content:space-between"><span>تركيزي الحالي</span><span id="myAvg" style="font-weight:800">--%</span></div><div class="bar"><div id="myBar" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div></div></div>
+<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><div style="font-size:13px;line-height:1.8">الكاميرا: شغالة طبيعية + مربع<br>النغمة: حلوة جديدة - Ding Dong لطيف<br>التوقيت: بعد 3 ثواني من التشتت<br>الحساسية: مظبوطة</div></div></div>
+<div class="bottom" id="s-bottom" style="display:none"><div id="ns-home" class="nav active" onclick="goS('home')"><div>🏠</div>الرئيسية</div><div id="ns-track" class="nav" onclick="goS('track')"><div>🎥</div>متابعة</div><div id="ns-stats" class="nav" onclick="goS('stats')"><div>📊</div>إحصائيات</div><div id="ns-settings" class="nav" onclick="goS('settings')"><div>⚙️</div>الإعدادات</div></div></div>
 
 <script>
-let students=[{name:"أحمد",focus:87},{name:"محمد",focus:64},{name:"سارة",focus:82}];
-function renderTeacher(){let avg=Math.round(students.reduce((a,b)=>a+b.focus,0)/students.length);document.getElementById('avg1').textContent=avg+'%';let list=students.map(s=>`<div class="card"><b>${s.name} ${s.focus}%</b></div>`).join('');document.getElementById('t-students-list').innerHTML=list;document.getElementById('t-home-alerts').innerHTML=list;document.getElementById('t-alerts-list').innerHTML=list;document.getElementById('rep-after').innerHTML=`متوسط: ${avg}%`;}
+let students=[{name:"أحمد",focus:87,status:"جيد",type:"good"},{name:"محمد",focus:64,status:"متوسط",type:"mid"},{name:"سارة",focus:82,status:"جيد",type:"good"},{name:"علي",focus:91,status:"جيد",type:"good"}];
+function renderTeacher(){let avg=Math.round(students.reduce((a,b)=>a+b.focus,0)/students.length);let good=students.filter(s=>s.focus>=70).length;let need=students.length-good;document.getElementById('avg1').textContent=avg+'%';document.getElementById('avg2').textContent=avg+'%';document.getElementById('good1').textContent=good;document.getElementById('need1').textContent=need;let list=students.map(s=>`<div class="student-card ${s.type}"><div class="s-head"><div style="display:flex;align-items:center;gap:8px"><div class="avatar">${s.name[0]}</div><b>${s.name}</b></div><span class="badge-s ${s.type}">${s.status}</span></div><div class="percent" style="color:${s.type==='good'?'#16a34a':s.type==='mid'?'#d97706':'#dc2626'}">${s.focus}%</div><div class="bar"><div class="bar-fill" style="width:${s.focus}%;background:${s.type==='good'?'#16a34a':s.type==='mid'?'#f59e0b':'#ef4444'}"></div></div></div>`).join('');document.getElementById('t-students-list').innerHTML=list;let alerts=students.filter(s=>s.focus<70).map(s=>`<div class="alert-box ${s.focus<50?'':'orange'}"><div><b>تنبيه — ${s.name}</b><div style="font-size:11px">التركيز ${s.focus}%</div></div><div>${s.focus<50?'🔴':'🟡'}</div></div>`).join('')||`<div class="card" style="text-align:center">لا يوجد تنبيهات ✅</div>`;document.getElementById('t-home-alerts').innerHTML=alerts;document.getElementById('t-alerts-list').innerHTML=alerts;document.getElementById('rep-after').innerHTML=`<div style="color:#16a34a;font-weight:800;text-align:center">✅ تم إنهاء الحصة</div><div style="margin-top:12px">متوسط التركيز: ${avg}%</div>`;}
 renderTeacher();
-function showRoot(r){if(r==='teacher'){teacherRoot.style.display='block';studentRoot.style.display='none';tabT.classList.add('active');tabS.classList.remove('active');}else{teacherRoot.style.display='none';studentRoot.style.display='block';tabS.classList.add('active');tabT.classList.remove('active');goS('home');}}
-function goT(n){document.querySelectorAll('#teacherRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#t-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('t-'+n).classList.add('active');document.getElementById('nt-'+n)?.classList.add('active');}
-function goS(n){document.querySelectorAll('#studentRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#s-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+n).classList.add('active');document.getElementById('ns-'+n)?.classList.add('active');}
-function endClass(){document.getElementById('rep-after').style.display='block';goT('reports');}
+function showRoot(r){if(r==='teacher'){teacherRoot.style.display='block';studentRoot.style.display='none';tabT.classList.add('active');tabS.classList.remove('active');tBottom.style.display='flex';sBottom.style.display='none';}else{teacherRoot.style.display='none';studentRoot.style.display='block';tabS.classList.add('active');tabT.classList.remove('active');tBottom.style.display='none';sBottom.style.display='flex';goS('home');}}
+function goT(n){document.querySelectorAll('#teacherRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#t-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('t-'+n).classList.add('active');document.getElementById('nt-'+n).classList.add('active');}
+function goS(n){document.querySelectorAll('#studentRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#s-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+n).classList.add('active');document.getElementById('ns-'+n).classList.add('active');}
+function endClass(){document.getElementById('rep-before').style.display='none';document.getElementById('rep-after').style.display='block';goT('reports');}
 
 const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
-const focusCircle=document.getElementById('focusCircle'),myAvg=document.getElementById('myAvg'),myBar=document.getElementById('myBar'),camPlace=document.getElementById('camPlace'),toneAlert=document.getElementById('toneAlert'),circle=document.getElementById('circle'),beepAudio=document.getElementById('beep');
-let eyeClosedStart=null,headTiltStart=null,lastBeep=0;
+const focusCircle=document.getElementById('focusCircle'),resFocus=document.getElementById('resFocus'),eyeDirEl=document.getElementById('eyeDir'),faceExpEl=document.getElementById('faceExp'),headMoveEl=document.getElementById('headMove'),focusTimeEl=document.getElementById('focusTime'),lostTimeEl=document.getElementById('lostTime'),myAvg=document.getElementById('myAvg'),myBar=document.getElementById('myBar'),focusBar=document.getElementById('focusBar'),lostBar2=document.getElementById('lostBar2'),camPlace=document.getElementById('camPlace'),focusBadge=document.getElementById('focusBadge'),toneAlert=document.getElementById('toneAlert'),circle=document.getElementById('circle');
+let eyeClosedStart=null,headTiltStart=null,lowStart=null,lastBeepTime=0,audioCtx=null;
 
+// نغمة حلوة جديدة - Ding Dong لطيف - مش نغمة اسماعيل
 function playBeep(msg){
- if(Date.now()-lastBeep<2500) return; lastBeep=Date.now();
- try{
-  beepAudio.currentTime=0; beepAudio.volume=0.6;
-  beepAudio.play();
-  setTimeout(()=>{beepAudio.pause(); beepAudio.currentTime=0;},250);
-  toneAlert.style.display='block'; toneAlert.textContent='• '+msg;
-  setTimeout(()=>toneAlert.style.display='none',1500);
- }catch(e){
-  // fallback نفس نغمة اسماعيل لو الملف مش موجود
-  let ac=new (window.AudioContext||window.webkitAudioContext)();
-  let o=ac.createOscillator(), g=ac.createGain(); o.connect(g); g.connect(ac.destination);
-  o.frequency.value=880; o.type='sine';
-  g.gain.setValueAtTime(0,ac.currentTime); g.gain.linearRampToValueAtTime(0.15,ac.currentTime+0.01); g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.22);
-  o.start(); o.stop(ac.currentTime+0.22);
- }
+  const now=Date.now(); if(now-lastBeepTime<4000) return; lastBeepTime=now;
+  try{
+    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    const t=audioCtx.currentTime;
+    // نغمة اولى حلوة 600Hz
+    const o1=audioCtx.createOscillator(), g1=audioCtx.createGain();
+    o1.connect(g1); g1.connect(audioCtx.destination);
+    o1.frequency.value=600; o1.type='sine';
+    g1.gain.setValueAtTime(0,t); g1.gain.linearRampToValueAtTime(0.18,t+0.02); g1.gain.exponentialRampToValueAtTime(0.001,t+0.35);
+    o1.start(t); o1.stop(t+0.35);
+    // نغمة تانية أحلى 800Hz
+    const o2=audioCtx.createOscillator(), g2=audioCtx.createGain();
+    o2.connect(g2); g2.connect(audioCtx.destination);
+    o2.frequency.value=800; o2.type='sine';
+    g2.gain.setValueAtTime(0,t+0.15); g2.gain.linearRampToValueAtTime(0.15,t+0.17); g2.gain.exponentialRampToValueAtTime(0.001,t+0.6);
+    o2.start(t+0.15); o2.stop(t+0.6);
+    toneAlert.style.display='block'; toneAlert.textContent='🔔 '+msg+' - نغمة حلوة';
+    setTimeout(()=>toneAlert.style.display='none',2000);
+  }catch(e){}
 }
 
 function calcFocus(l){
- let s=100,isEyeClosed=false,isHeadTilt=false;
- const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152];
- const yaw=nose.x-0.5,pitch=fore.y-chin.y,eyeOpen=Math.abs(eyeT.y-eyeB.y);
- if(eyeOpen<0.020){s-=75;isEyeClosed=true;}
- if(Math.abs(yaw)>0.04){s-=50;isHeadTilt=true;}
- if(pitch<0.32||pitch>0.36){s-=45;isHeadTilt=true;}
- return{score:Math.max(0,Math.min(100,Math.round(s))),isEyeClosed,isHeadTilt};
+  let s=100,eyeD='أمام',face='طبيعي',head='مستقرة',isEyeClosed=false,isHeadTilt=false;
+  const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152];
+  const yaw=nose.x-0.5, pitch=fore.y-chin.y, eyeOpen=Math.abs(eyeT.y-eyeB.y);
+  if(eyeOpen<0.020){s-=75;face='مقفولة';isEyeClosed=true;}
+  if(Math.abs(yaw)>0.04){s-=50;eyeD=yaw>0?'يمين':'شمال';head='لافف';isHeadTilt=true;}
+  if(pitch<0.32){s-=50;head='موطي';isHeadTilt=true;}
+  if(pitch>0.36){s-=40;head='رافع';isHeadTilt=true;}
+  return{score:Math.max(0,Math.min(100,Math.round(s))),eyeD,face,head,isEyeClosed,isHeadTilt};
 }
 
 function onResults(r){
- canvas.width=video.videoWidth; canvas.height=video.videoHeight;
- ctx.clearRect(0,0,canvas.width,canvas.height);
- if(r.multiFaceLandmarks&&r.multiFaceLandmarks[0]){
-  const lm=r.multiFaceLandmarks[0];
-  let minX=1,minY=1,maxX=0,maxY=0; lm.forEach(p=>{if(p.x<minX)minX=p.x;if(p.y<minY)minY=p.y;if(p.x>maxX)maxX=p.x;if(p.y>maxY)maxY=p.y;});
-  const pad=0.06; minX=Math.max(0,minX-pad); minY=Math.max(0,minY-pad); maxX=Math.min(1,maxX+pad); maxY=Math.min(1,maxY+pad);
-  const x=minX*canvas.width,y=minY*canvas.height,w=(maxX-minX)*canvas.width,h=(maxY-minY)*canvas.height;
-  ctx.strokeStyle='#22c55e'; ctx.lineWidth=3; ctx.strokeRect(x,y,w,h); ctx.fillStyle='rgba(34,197,94,0.15)'; ctx.fillRect(x,y,w,h);
-  const res=calcFocus(lm);
-  focusCircle.textContent=res.score+'%'; myAvg.textContent=res.score+'%'; myBar.style.width=res.score+'%';
-  circle.style.borderColor=res.score>=50?'#16a34a':'#ef4444';
-  if(res.isEyeClosed){if(!eyeClosedStart)eyeClosedStart=Date.now();if(Date.now()-eyeClosedStart>=500){playBeep('عينك مقفولة');eyeClosedStart=Date.now();}}else eyeClosedStart=null;
-  if(res.isHeadTilt&&!res.isEyeClosed){if(!headTiltStart)headTiltStart=Date.now();if(Date.now()-headTiltStart>=500){playBeep('ركز');headTiltStart=Date.now();}}else if(!res.isEyeClosed) headTiltStart=null;
-  students[2].focus=res.score; renderTeacher();
- }else{ ctx.clearRect(0,0,canvas.width,canvas.height); }
+  canvas.width=video.videoWidth; canvas.height=video.videoHeight;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(r.multiFaceLandmarks && r.multiFaceLandmarks[0]){
+    const lm=r.multiFaceLandmarks[0];
+    // مربع حول الوش موجود وشغال
+    let minX=1,minY=1,maxX=0,maxY=0; lm.forEach(p=>{ if(p.x<minX)minX=p.x; if(p.y<minY)minY=p.y; if(p.x>maxX)maxX=p.x; if(p.y>maxY)maxY=p.y; });
+    const pad=0.06; minX=Math.max(0,minX-pad); minY=Math.max(0,minY-pad); maxX=Math.min(1,maxX+pad); maxY=Math.min(1,maxY+pad);
+    const x=minX*canvas.width, y=minY*canvas.height, w=(maxX-minX)*canvas.width, h=(maxY-minY)*canvas.height;
+    ctx.strokeStyle='#22c55e'; ctx.lineWidth=3; ctx.strokeRect(x,y,w,h);
+    ctx.fillStyle='rgba(34,197,94,0.12)'; ctx.fillRect(x,y,w,h);
+    
+    const res=calcFocus(lm);
+    focusCircle.textContent=res.score+'%'; resFocus.textContent=res.score+'%';
+    eyeDirEl.textContent=res.eyeD; faceExpEl.textContent=res.face; headMoveEl.textContent=res.head;
+    myAvg.textContent=res.score+'%'; myBar.style.width=res.score+'%'; focusBar.style.width=res.score+'%';
+    let f=Math.round(42*res.score/100); focusTimeEl.textContent=f+' دقيقة'; lostTimeEl.textContent=(42-f)+' دقائق'; lostBar2.style.width=(100-res.score)+'%';
+    circle.style.borderColor=res.score>=50?'#16a34a':'#ef4444'; focusCircle.style.color=res.score>=50?'#16a34a':'#ef4444';
+    focusBadge.textContent=res.score>=70?'جيد':res.score>=50?'متوسط':'منخفض';
+
+    // أهم حاجة - النغمة بعد 3 ثواني زي ما طلبتي
+    if(res.isEyeClosed){ if(!eyeClosedStart) eyeClosedStart=Date.now(); if(Date.now()-eyeClosedStart>=3000){playBeep('عينك مقفولة');eyeClosedStart=Date.now();}}else eyeClosedStart=null;
+    if(res.isHeadTilt && !res.isEyeClosed){ if(!headTiltStart) headTiltStart=Date.now(); if(Date.now()-headTiltStart>=3000){playBeep('الوش مال');headTiltStart=Date.now();}}else if(!res.isEyeClosed) headTiltStart=null;
+    if(res.score<55 && !res.isEyeClosed && !res.isHeadTilt){ if(!lowStart) lowStart=Date.now(); if(Date.now()-lowStart>=3000){playBeep('تركيز منخفض');lowStart=Date.now();}}else if(!res.isHeadTilt) lowStart=null;
+
+    students[2].focus=res.score; students[2].status=res.score>=70?'جيد':res.score>=50?'متوسط':'منخفض'; students[2].type=res.score>=70?'good':res.score>=50?'mid':'low'; renderTeacher();
+  }else{ ctx.clearRect(0,0,canvas.width,canvas.height); }
 }
 
 const faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
@@ -75,15 +95,19 @@ faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0
 faceMesh.onResults(onResults);
 
 async function startCameraFixed(){
- try{
-  camPlace.textContent='جاري التشغيل...'; camPlace.style.display='block';
-  const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:640},height:{ideal:480}},audio:false});
-  video.srcObject=stream; await video.play();
-  canvas.width=video.videoWidth; canvas.height=video.videoHeight;
-  camPlace.style.display='none'; goS('track');
-  beepAudio.volume=0.4; beepAudio.currentTime=0; beepAudio.play().catch(()=>{}); setTimeout(()=>{beepAudio.pause(); beepAudio.currentTime=0;},200);
-  async function loop(){ if(video.readyState>=2){ await faceMesh.send({image:video}); } requestAnimationFrame(loop); } loop();
- }catch(e){ camPlace.textContent='اسمحي للكاميرا 🔒'; alert('دوسي القفل فوق -> Camera -> Allow'); }
+  try{
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    camPlace.textContent='جاري التشغيل...'; camPlace.style.display='block';
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:640},height:{ideal:480}},audio:false});
+    video.srcObject=stream; await video.play();
+    canvas.width=video.videoWidth; canvas.height=video.videoHeight;
+    camPlace.style.display='none'; goS('track');
+    playBeep('الكاميرا شغالة');
+    async function loop(){ if(video.readyState>=2){ await faceMesh.send({image:video}); } requestAnimationFrame(loop); } loop();
+  }catch(e){
+    camPlace.textContent='اسمحي للكاميرا من القفل فوق 🔒';
+    alert('دوسي على القفل 🔒 فوق جنب اللينك واختاري Camera -> Allow');
+  }
 }
 document.getElementById('startBtn').onclick=startCameraFixed;
 showRoot('teacher');
