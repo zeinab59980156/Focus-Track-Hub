@@ -3,16 +3,15 @@
 .ai-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}.alert-box{background:#fff;border-radius:14px;padding:12px 14px;margin:10px 14px;display:flex;justify-content:space-between;box-shadow:0 1px 6px rgba(0,0,0,.05);border-right:4px solid #ef4444}.alert-box.orange{border-right-color:#f59e0b}.report-box{background:#fff;border-radius:16px;padding:18px;margin:12px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06);font-size:13px;line-height:1.8}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;padding:6px 0 8px;z-index:99}.nav{font-size:10px;color:#94a3b8;text-align:center;cursor:pointer;padding:4px 10px;border-radius:10px}.nav.active{color:#fff;background:#2563eb}.nav div{font-size:18px}
 </style></head><body>
 <header><h1>FocusTrack</h1><p>ركز أكثر، تعلم أفضل</p><div class="tabs"><button id="tabT" class="tab active" onclick="showRoot('teacher')">مدرس</button><button id="tabS" class="tab" onclick="showRoot('student')">طالب</button></div></header>
-
 <div id="teacherRoot"><div class="sub">نموذج تجريبي - جميع البيانات محاكاة</div><div id="t-home" class="page active"><div class="top"><h2>لوحة متابعة الطلاب</h2><button class="end" onclick="endClass()">إنهاء الحصة</button></div><div class="cards"><div class="card"><b id="avg1" style="color:#2563eb">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b id="good1" style="color:#16a34a">18</b><span>طلاب بتركيز جيد</span></div><div class="card"><b id="need1" style="color:#f59e0b">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b style="color:#2563eb">24</b><span>عدد الطلاب</span></div></div><div id="t-home-alerts"></div></div><div id="t-students" class="page"><div class="top"><h2>لوحة متابعة الطلاب</h2></div><div id="t-students-list"></div></div><div id="t-stats" class="page"><div class="top"><h2>إحصائيات الفصل</h2></div><div class="cards"><div class="card"><b>24</b><span>عدد الطلاب</span></div><div class="card"><b id="avg2">76%</b><span>متوسط التركيز</span></div></div></div><div id="t-alerts" class="page"><div class="top"><h2>التنبيهات</h2></div><div id="t-alerts-list"></div></div><div id="t-reports" class="page"><div class="top"><h2>التقارير</h2></div><div id="rep-before" class="report-box" style="text-align:center">لم يتم إنهاء الحصة بعد</div><div id="rep-after" class="report-box" style="display:none"></div></div><div class="bottom" id="t-bottom"><div id="nt-home" class="nav active" onclick="goT('home')"><div>🏠</div>الرئيسية</div><div id="nt-students" class="nav" onclick="goT('students')"><div>👥</div>الطلاب</div><div id="nt-stats" class="nav" onclick="goT('stats')"><div>📊</div>إحصائيات</div><div id="nt-alerts" class="nav" onclick="goT('alerts')"><div>🔔</div>التنبيهات</div><div id="nt-reports" class="nav" onclick="goT('reports')"><div>📄</div>التقارير</div></div></div>
-
 <div id="studentRoot" style="display:none"><div class="sub">نموذج تجريبي</div><div id="s-home" class="page active"><div class="card" style="text-align:center"><b>حالة التركيز</b><div class="circle-wrap" style="margin-top:10px"><div id="circle" class="circle"><b id="focusCircle">--%</b></div><div class="badge"><span id="focusBadge">اضغط بدء</span></div><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button></div></div><div class="card"><b>الحصة الحالية</b><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>مدة التركيز</span><span id="focusTime">--</span></div><div class="bar"><div id="focusBar" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>مدة التشتت</span><span id="lostTime">--</span></div><div class="bar"><div id="lostBar2" class="bar-fill" style="width:0%;background:#f59e0b"></div></div></div></div></div>
-
-<div id="s-track" class="page"><div class="card"><b>معاينة الكاميرا - مربع ذكي 🟩</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas><div id="camPlace" style="position:absolute;color:#fff;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:8px;font-size:12px">بستنى السماح...</div></div><div style="font-size:11px;color:#16a34a;text-align:center;margin-top:6px">✅ الكاميرا طبيعية + مربع يظهر حول الوش فقط</div></div><div class="card"><b>تحليل الذكاء الاصطناعي</b><div class="ai-row"><span>اتجاه العين</span><span id="eyeDir">--</span></div><div class="ai-row"><span>تعبير الوجه</span><span id="faceExp">--</span></div><div class="ai-row"><span>حركة الرأس</span><span id="headMove">--</span></div><div class="ai-row"><span>النتيجة</span><span id="resFocus" style="color:#16a34a;font-weight:800">--</span></div></div></div>
-
+<div id="s-track" class="page"><div class="card"><b>معاينة الكاميرا - حساسة جدا + مربع 🟩</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas><div id="camPlace" style="position:absolute;color:#fff;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:8px;font-size:12px">بستنى السماح...</div></div><div style="font-size:11px;color:#16a34a;text-align:center;margin-top:6px">✅ الكاميرا طبيعية + مربع أخضر حول الوش فقط</div></div><div class="card"><b>تحليل الذكاء الاصطناعي</b><div class="ai-row"><span>اتجاه العين</span><span id="eyeDir">--</span></div><div class="ai-row"><span>تعبير الوجه</span><span id="faceExp">--</span></div><div class="ai-row"><span>حركة الرأس</span><span id="headMove">--</span></div><div class="ai-row"><span>النتيجة</span><span id="resFocus" style="color:#16a34a;font-weight:800">--</span></div></div></div>
 <div id="s-stats" class="page"><div class="card"><b>إحصائياتي</b><div style="margin-top:10px"><div style="display:flex;justify-content:space-between"><span>تركيزي الحالي</span><span id="myAvg" style="font-weight:800">--%</span></div><div class="bar"><div id="myBar" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div></div></div>
-<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><div style="font-size:13px;line-height:1.8">الكاميرا: طبيعية + مربع ذكي<br>النغمة: Pop خفيفة (رقم 3) 💧<br>الحساسية: عالية - في ثانية واحدة</div></div></div>
+<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><div style="font-size:13px;line-height:1.8">الكاميرا: حساسة جدا - أحس حاجة<br>النغمة: الأولانية بس قصيرة تكة<br>المربع: يظهر حول الوش فقط</div></div></div>
 <div class="bottom" id="s-bottom" style="display:none"><div id="ns-home" class="nav active" onclick="goS('home')"><div>🏠</div>الرئيسية</div><div id="ns-track" class="nav" onclick="goS('track')"><div>🎥</div>متابعة</div><div id="ns-stats" class="nav" onclick="goS('stats')"><div>📊</div>إحصائيات</div><div id="ns-settings" class="nav" onclick="goS('settings')"><div>⚙️</div>الإعدادات</div></div></div>
+
+<!-- النغمة الأولانية اللي بعتتيها -->
+<audio id="beep" preload="auto" src="beep.ogg"></audio>
 
 <script>
 let students=[{name:"أحمد",focus:87,status:"جيد",time:"4 دقائق",type:"good"},{name:"محمد",focus:64,status:"متوسط",time:"11 دقيقة",type:"mid"},{name:"سارة",focus:82,status:"جيد",time:"7 دقائق",type:"good"},{name:"علي",focus:91,status:"جيد",time:"دقيقتان",type:"good"}];
@@ -24,55 +23,47 @@ function goS(name){document.querySelectorAll('#studentRoot .page').forEach(p=>p.
 function endClass(){document.getElementById('rep-before').style.display='none';document.getElementById('rep-after').style.display='block';goT('reports');}
 
 const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
-const focusCircle=document.getElementById('focusCircle'),resFocus=document.getElementById('resFocus'),eyeDirEl=document.getElementById('eyeDir'),faceExpEl=document.getElementById('faceExp'),headMoveEl=document.getElementById('headMove'),focusTimeEl=document.getElementById('focusTime'),lostTimeEl=document.getElementById('lostTime'),myAvg=document.getElementById('myAvg'),myBar=document.getElementById('myBar'),focusBar=document.getElementById('focusBar'),lostBar2=document.getElementById('lostBar2'),camPlace=document.getElementById('camPlace'),focusBadge=document.getElementById('focusBadge'),toneAlert=document.getElementById('toneAlert'),circle=document.getElementById('circle');
-let eyeClosedStart=null, headTiltStart=null, lowStart=null, audioCtx=null, lastBeepTime=0;
+const focusCircle=document.getElementById('focusCircle'),resFocus=document.getElementById('resFocus'),eyeDirEl=document.getElementById('eyeDir'),faceExpEl=document.getElementById('faceExp'),headMoveEl=document.getElementById('headMove'),focusTimeEl=document.getElementById('focusTime'),lostTimeEl=document.getElementById('lostTime'),myAvg=document.getElementById('myAvg'),myBar=document.getElementById('myBar'),focusBar=document.getElementById('focusBar'),lostBar2=document.getElementById('lostBar2'),camPlace=document.getElementById('camPlace'),focusBadge=document.getElementById('focusBadge'),toneAlert=document.getElementById('toneAlert'),circle=document.getElementById('circle'),beepAudio=document.getElementById('beep');
+let eyeClosedStart=null, headTiltStart=null, lowStart=null, lastBeepTime=0;
 
 function playBeep(msg){
-  const now=Date.now(); if(now-lastBeepTime<3000) return; lastBeepTime=now;
+  const now=Date.now(); if(now-lastBeepTime<2500) return; lastBeepTime=now;
   try{
-    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
-    o.type='sine';
-    // نغمة رقم 3 - Pop خفيفة زي نقطة مياه
-    o.frequency.value=1200;
-    g.gain.setValueAtTime(0,audioCtx.currentTime);
-    g.gain.linearRampToValueAtTime(0.15,audioCtx.currentTime+0.01);
-    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.12);
-    o.start(); o.stop(audioCtx.currentTime+0.12);
+    // النغمة الأولانية بس قصيرة - تكة صغنونة 0.25 ثانية
+    beepAudio.currentTime=0;
+    beepAudio.volume=0.5;
+    beepAudio.play();
+    setTimeout(()=>{ beepAudio.pause(); beepAudio.currentTime=0; }, 250);
     toneAlert.style.display='block'; toneAlert.textContent='• '+msg;
-    setTimeout(()=>toneAlert.style.display='none',1800);
+    setTimeout(()=>toneAlert.style.display='none',1500);
   }catch(e){}
 }
 
+// كاميرا أحس حاجة - حساسية قصوى
 function calcFocus(l){
   let s=100,eyeD='أمام',face='طبيعي',head='مستقرة',isEyeClosed=false,isHeadTilt=false;
   const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152];
   const yaw=nose.x-0.5, pitch=fore.y-chin.y, eyeOpen=Math.abs(eyeT.y-eyeB.y);
-  if(eyeOpen<0.018){s-=70;face='مقفولة';isEyeClosed=true;}
-  if(Math.abs(yaw)>0.06){s-=45;eyeD=yaw>0?'يمين':'شمال';head='لافف';isHeadTilt=true;}
-  if(pitch<0.30){s-=45;head='موطي';isHeadTilt=true;}
-  if(pitch>0.37){s-=35;head='رافع';isHeadTilt=true;}
+  // حساسية عالية جدا
+  if(eyeOpen<0.020){s-=75;face='مقفولة';isEyeClosed=true;}
+  if(Math.abs(yaw)>0.04){s-=50;eyeD=yaw>0?'يمين':'شمال';head='لافف';isHeadTilt=true;}
+  if(pitch<0.32){s-=50;head='موطي';isHeadTilt=true;}
+  if(pitch>0.36){s-=40;head='رافع';isHeadTilt=true;}
   return{score:Math.max(0,Math.min(100,Math.round(s))),eyeD,face,head,isEyeClosed,isHeadTilt};
 }
 
 function onResults(r){
-  // ضبط حجم الكانفاس زي الفيديو
   canvas.width=video.videoWidth; canvas.height=video.videoHeight;
   ctx.clearRect(0,0,canvas.width,canvas.height);
-
   if(r.multiFaceLandmarks && r.multiFaceLandmarks[0]){
     const lm=r.multiFaceLandmarks[0];
-    // === ارسم مربع حوالين الوش فقط ===
     let minX=1,minY=1,maxX=0,maxY=0;
     lm.forEach(p=>{ if(p.x<minX)minX=p.x; if(p.y<minY)minY=p.y; if(p.x>maxX)maxX=p.x; if(p.y>maxY)maxY=p.y; });
-    const pad=0.05;
-    minX=Math.max(0,minX-pad); minY=Math.max(0,minY-pad); maxX=Math.min(1,maxX+pad); maxY=Math.min(1,maxY+pad);
+    const pad=0.06; minX=Math.max(0,minX-pad); minY=Math.max(0,minY-pad); maxX=Math.min(1,maxX+pad); maxY=Math.min(1,maxY+pad);
     const x=minX*canvas.width, y=minY*canvas.height, w=(maxX-minX)*canvas.width, h=(maxY-minY)*canvas.height;
     ctx.strokeStyle='#22c55e'; ctx.lineWidth=3; ctx.strokeRect(x,y,w,h);
     ctx.fillStyle='rgba(34,197,94,0.15)'; ctx.fillRect(x,y,w,h);
-    ctx.fillStyle='#22c55e'; ctx.font='bold 12px Cairo'; ctx.fillText('وجه', x, y-6);
-
+    
     const res=calcFocus(lm);
     focusCircle.textContent=res.score+'%'; resFocus.textContent=res.score+'%';
     eyeDirEl.textContent=res.eyeD; faceExpEl.textContent=res.face; headMoveEl.textContent=res.head;
@@ -81,30 +72,30 @@ function onResults(r){
     circle.style.borderColor=res.score>=50?'#16a34a':'#ef4444'; focusCircle.style.color=res.score>=50?'#16a34a':'#ef4444';
     focusBadge.textContent=res.score>=70?'جيد':res.score>=50?'متوسط':'منخفض';
 
-    if(res.isEyeClosed){ if(!eyeClosedStart) eyeClosedStart=Date.now(); if(Date.now()-eyeClosedStart>=1000){playBeep('عينك مقفولة');eyeClosedStart=Date.now();}}else eyeClosedStart=null;
-    if(res.isHeadTilt && !res.isEyeClosed){ if(!headTiltStart) headTiltStart=Date.now(); if(Date.now()-headTiltStart>=1000){playBeep('ركز');headTiltStart=Date.now();}}else if(!res.isEyeClosed) headTiltStart=null;
-    if(res.score<50 && !res.isEyeClosed && !res.isHeadTilt){ if(!lowStart) lowStart=Date.now(); if(Date.now()-lowStart>=1000){playBeep('تركيز منخفض');lowStart=Date.now();}}else if(!res.isHeadTilt) lowStart=null;
+    // بيلقط بعد نص ثانية بس - أحس حاجة
+    if(res.isEyeClosed){ if(!eyeClosedStart) eyeClosedStart=Date.now(); if(Date.now()-eyeClosedStart>=500){playBeep('عينك مقفولة');eyeClosedStart=Date.now();}}else eyeClosedStart=null;
+    if(res.isHeadTilt && !res.isEyeClosed){ if(!headTiltStart) headTiltStart=Date.now(); if(Date.now()-headTiltStart>=500){playBeep('ركز');headTiltStart=Date.now();}}else if(!res.isEyeClosed) headTiltStart=null;
+    if(res.score<55 && !res.isEyeClosed && !res.isHeadTilt){ if(!lowStart) lowStart=Date.now(); if(Date.now()-lowStart>=500){playBeep('تركيز منخفض');lowStart=Date.now();}}else if(!res.isHeadTilt) lowStart=null;
 
     students[2].focus=res.score; students[2].status=res.score>=70?'جيد':res.score>=50?'متوسط':'منخفض'; students[2].type=res.score>=70?'good':res.score>=50?'mid':'low'; renderTeacher();
   }else{
-    // مفيش وش - مفيش مربع
     ctx.clearRect(0,0,canvas.width,canvas.height);
   }
 }
 
 const faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
-faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.2,minTrackingConfidence:0.2});
+faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.15,minTrackingConfidence:0.15});
 faceMesh.onResults(onResults);
 
 async function startCameraFixed(){
   try{
-    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
     camPlace.textContent='جاري التشغيل...'; camPlace.style.display='block';
     const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:640},height:{ideal:480}},audio:false});
     video.srcObject=stream; await video.play();
     canvas.width=video.videoWidth; canvas.height=video.videoHeight;
     camPlace.style.display='none'; goS('track');
-    playBeep('شغال');
+    // تكة قصيرة أول ما تشتغل
+    beepAudio.volume=0.4; beepAudio.currentTime=0; beepAudio.play(); setTimeout(()=>beepAudio.pause(),200);
     async function loop(){ if(video.readyState>=2){ await faceMesh.send({image:video}); } requestAnimationFrame(loop); } loop();
   }catch(e){
     camPlace.textContent='اسمحي للكاميرا من القفل فوق';
