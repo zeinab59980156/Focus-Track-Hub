@@ -7,8 +7,8 @@
 <div id="teacherRoot"><div class="sub">نموذج تجريبي</div><div id="t-home" class="page active"><div style="display:flex;justify-content:space-between;margin:12px 14px"><h2 style="margin:0">لوحة متابعة الطلاب</h2><button style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:8px" onclick="endClass()">إنهاء الحصة</button></div><div class="cards"><div class="card"><b id="avg1" style="color:#2563eb">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b id="good1" style="color:#16a34a">18</b><span>طلاب بتركيز جيد</span></div><div class="card"><b id="need1" style="color:#f59e0b">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b style="color:#2563eb">24</b><span>عدد الطلاب</span></div></div><div id="t-home-alerts"></div></div><div id="t-students" class="page"><div id="t-students-list"></div></div><div id="t-stats" class="page"><div class="card">24 طالب - متوسط <span id="avg2">76%</span></div></div><div id="t-alerts" class="page"><div id="t-alerts-list"></div></div><div id="t-reports" class="page"><div class="card">التقارير</div></div><div class="bottom" id="t-bottom"><div id="nt-home" class="nav active" onclick="goT('home')"><div>🏠</div>الرئيسية</div><div id="nt-students" class="nav" onclick="goT('students')"><div>👥</div>الطلاب</div><div id="nt-stats" class="nav" onclick="goT('stats')"><div>📊</div>إحصائيات</div><div id="nt-alerts" class="nav" onclick="goT('alerts')"><div>🔔</div>التنبيهات</div><div id="nt-reports" class="nav" onclick="goT('reports')"><div>📄</div>التقارير</div></div></div>
 
 <div id="studentRoot" style="display:none"><div class="sub">نموذج تجريبي</div><div id="s-home" class="page active"><div class="card" style="text-align:center"><div id="circle" class="circle" style="margin:auto"><b id="focusCircle">--%</b></div><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button><p id="status" style="font-weight:800">مستعد</p></div></div>
-<div id="s-track" class="page"><div class="card"><b>الكاميرا - تنبيه فوري عالي 🔊</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div><p id="meterStatus" style="text-align:center;font-weight:800">في انتظار الكاميرا</p></div></div>
-<div id="s-stats" class="page"><div class="card"><h3>إحصائياتي</h3><p id="myAvg">--%</p></div></div><div id="s-settings" class="page"><div class="card"><h3>النغمة العالية الفورية</h3><p style="line-height:2">✅ مركز = ساكت<br>🔔 عين تغفل = ترن فورا<br>🔔 راس يميل = ترن فورا<br>🔊 النغمة عالية 1200Hz زي الاول</p></div></div>
+<div id="s-track" class="page"><div class="card"><b>الكاميرا - النغمة بتقف لما تركز 🔊</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div><p id="meterStatus" style="text-align:center;font-weight:800">في انتظار الكاميرا</p></div></div>
+<div id="s-stats" class="page"><div class="card"><h3>إحصائياتي</h3><p id="myAvg">--%</p></div></div><div id="s-settings" class="page"><div class="card"><h3>المنطق الجديد</h3><p style="line-height:2">✅ مركز + راس عدل = ساكت وتوقف النغمة فورا<br>🔔 عين قفلت او راس مال = ترن<br>🔊 عالية 1200Hz زي ما بتحبي</p></div></div>
 <div class="bottom" id="s-bottom" style="display:none"><div id="ns-home" class="nav active" onclick="goS('home')"><div>🏠</div>الرئيسية</div><div id="ns-track" class="nav" onclick="goS('track')"><div>🎥</div>متابعة</div><div id="ns-stats" class="nav" onclick="goS('stats')"><div>📊</div>إحصائيات</div><div id="ns-settings" class="nav" onclick="goS('settings')"><div>⚙️</div>الإعدادات</div></div></div>
 
 <script>
@@ -22,25 +22,34 @@ function endClass(){goT('reports');}
 
 const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d'),focusCircle=document.getElementById('focusCircle'),meterStatus=document.getElementById('meterStatus'),toneAlert=document.getElementById('toneAlert'),statusEl=document.getElementById('status'),myAvg=document.getElementById('myAvg');
 let audioCtx=null,lastBeep=0;
+let activeOscillators=[];
+
+function stopAllBeeps(){
+  try{
+    activeOscillators.forEach(o=>{try{o.stop();}catch(e){}});
+    activeOscillators=[];
+    toneAlert.style.display='none';
+  }catch(e){}
+}
 
 function beepHigh(msg){
-  const now=Date.now(); if(now-lastBeep<800) return; lastBeep=now;
+  const now=Date.now(); if(now-lastBeep<500) return; lastBeep=now;
   try{
     if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    // النغمة العالية الاولانية
+    stopAllBeeps();
     for(let i=0;i<2;i++){
       const o=audioCtx.createOscillator(), g=audioCtx.createGain();
       o.connect(g); g.connect(audioCtx.destination);
       o.type='square';
-      o.frequency.value=1200; // عالية زي الاول
+      o.frequency.value=1200;
       g.gain.setValueAtTime(0,audioCtx.currentTime+i*0.15);
-      g.gain.linearRampToValueAtTime(0.6,audioCtx.currentTime+i*0.15+0.02); // اعلى
+      g.gain.linearRampToValueAtTime(0.6,audioCtx.currentTime+i*0.15+0.02);
       g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+i*0.15+0.3);
       o.start(audioCtx.currentTime+i*0.15);
       o.stop(audioCtx.currentTime+i*0.15+0.3);
+      activeOscillators.push(o);
     }
     toneAlert.style.display='block'; toneAlert.textContent='🔔🔔 '+msg;
-    setTimeout(()=>toneAlert.style.display='none',1200);
     if(navigator.vibrate) navigator.vibrate(200);
   }catch(e){}
 }
@@ -63,7 +72,6 @@ function onResults(r){
     const x=minX*canvas.width,y=minY*canvas.height,w=(maxX-minX)*canvas.width,h=(maxY-minY)*canvas.height; ctx.strokeStyle='#22c55e'; ctx.lineWidth=3; ctx.strokeRect(x,y,w,h);
     const res=calc(lm);
     focusCircle.textContent=res.score+'%'; myAvg.textContent=res.score+'%'; students[2].focus=res.score; renderT();
-    // فوري بدون انتظار
     if(res.isEyeClosed){
       meterStatus.textContent='👁️ عينك قفلت!'; meterStatus.style.color='#dc2626'; statusEl.textContent='👁️ عينك قفلت!';
       beepHigh('عينك قفلت - اصحى!');
@@ -71,7 +79,9 @@ function onResults(r){
       meterStatus.textContent='↔️ راسك مال '+res.dir+'!'; meterStatus.style.color='#d97706'; statusEl.textContent='راسك مال '+res.dir;
       beepHigh('راسك مال '+res.dir+'!');
     }else{
-      meterStatus.textContent='✅ مركز - مفيش نغمة'; meterStatus.style.color='#16a34a'; statusEl.textContent='✅ مركز - مفيش نغمة';
+      // رجع مركز -> اقفل النغمة فورا
+      stopAllBeeps();
+      meterStatus.textContent='✅ مركز - النغمة وقفت'; meterStatus.style.color='#16a34a'; statusEl.textContent='✅ مركز - مفيش نغمة';
     }
   }
 }
