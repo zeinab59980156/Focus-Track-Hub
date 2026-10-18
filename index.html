@@ -1,10 +1,68 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Focus Track Hub</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script><script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script><style>*{font-family:Cairo;box-sizing:border-box}body{margin:0;background:#f0f7ff}header{background:#2563eb;color:#fff;padding:14px 20px;display:flex;justify-content:space-between}.landing{max-width:900px;margin:30px auto;padding:20px;text-align:center}.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:700px){.cards{grid-template-columns:1fr}}.role-card{background:#fff;border-radius:20px;padding:30px;box-shadow:0 8px 30px rgba(37,99,235,.15);border-top:6px solid #2563eb}.role-card.teacher{border-top-color:#16a34a}.btn{padding:14px;border-radius:12px;border:none;font-weight:800;cursor:pointer;width:100%;color:#fff}.btn-s{background:#2563eb}.btn-t{background:#16a34a}#studentView,#teacherView{display:none;max-width:1200px;margin:20px auto;padding:15px}.white-box{background:#fff;border-radius:16px;padding:20px}#container{position:relative;width:90%;max-width:380px;margin:15px auto;background:#000;border-radius:24px;overflow:hidden;border:3px solid #2563eb;aspect-ratio:9/16;height:620px;max-height:75vh;box-shadow:0 8px 25px rgba(0,0,0,.2)}video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}canvas{position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(-1)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:15px}@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}.card-stat{background:#f8fbff;border:2px solid #dbeafe;border-radius:12px;padding:12px;text-align:center}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:center}</style></head><body>
-<header><div>🇪🇬 Focus Track Hub</div><div id="backBtn" style="display:none;cursor:pointer" onclick="location.reload()">⬅ رجوع</div></header>
-<div id="landing" class="landing"><h1 style="color:#1e40af">منصة تعليمية موحدة للطلاب والمعلمين</h1><p>اختر نوع الحساب للمتابعة إلى لوحة التحكم الخاصة بك</p><div class="cards"><div class="role-card" onclick="openStudent()"><div style="font-size:50px">👩‍🎓</div><h2>واجهة الطالب</h2><p>الدخول إلى الدروس والواجبات ومتابعة التركيز</p><button class="btn btn-s">→ دخول الطالب</button></div><div class="role-card teacher" onclick="openTeacher()"><div style="font-size:50px">👨‍🏫</div><h2>واجهة المعلم</h2><p>إدارة الفصول وإنشاء الواجبات ومتابعة الطلاب</p><button class="btn btn-t">→ دخول المعلم</button></div></div></div>
-<div id="studentView"><div class="white-box"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><h2>🎥 جلسة التركيز - الطالب</h2><button id="startBtn" class="btn btn-s" style="width:auto">▶ بدء الكاميرا</button></div><div id="statusBox" style="background:#eff6ff;padding:10px;border-radius:10px;text-align:center;margin-top:10px">دوسي بدء - الكاميرا الطويلة هتخلي وشك صغير ومظبوط</div><div id="container"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div><div class="stats"><div class="card-stat"><div>التركيز</div><b id="focusValue">--%</b></div><div class="card-stat"><div>اتجاه العين</div><b id="eyeDir">--</b></div><div class="card-stat"><div>حركة الرأس</div><b id="headDir">--</b></div><div class="card-stat"><div>حالة الوجه</div><b id="eyeState">--</b></div></div><audio id="alertAudio" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio></div></div>
-<div id="teacherView"><div class="white-box"><h2 style="color:#16a34a">👨‍🏫 لوحة تحكم المعلم</h2><table><tr><th>الطالب</th><th>التركيز</th><th>العين</th><th>الرأس</th><th>الحالة</th></tr><tr><td>زينب</td><td id="t_focus" style="color:red">--%</td><td id="t_eye">--</td><td id="t_head">--</td><td>مباشر</td></tr><tr><td>أحمد</td><td style="color:green">85%</td><td>للشاشة</td><td>ثابت</td><td>🟢 مركز</td></tr><tr><td>محمد</td><td style="color:red">35%</td><td>يمين</td><td>لافف</td><td>🔴 تنبيه</td></tr></table></div></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocusTrack AI - Focus Tracking</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+body{font-family:'Inter',sans-serif}
+.glass{backdrop-filter:blur(16px);background:rgba(255,255,255,0.08)}
+</style>
+</head>
+<body class="bg-[#0a0a0f] text-white min-h-screen">
+<div class="max-w-6xl mx-auto p-4 md:p-8">
+  <header class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold">FocusTrack <span class="text-violet-400">AI</span></h1>
+    <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">● LIVE AI</span>
+  </header>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="md:col-span-2 glass rounded-[24px] p-2 relative overflow-hidden aspect-video bg-black">
+      <video id="video" autoplay playsinline muted class="w-full h-full object-cover rounded-[20px] scale-x-[-1]"></video>
+      <canvas id="canvas" class="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-[20px]"></canvas>
+      <div class="absolute bottom-4 left-4 glass rounded-full px-4 py-2 text-sm">Focus Score: <span id="score" class="font-bold text-violet-400">0%</span></div>
+      <div id="status" class="absolute top-4 left-4 glass rounded-full px-4 py-2 text-xs">Starting camera...</div>
+    </div>
+
+    <div class="space-y-4">
+      <div class="glass rounded-[24px] p-6">
+        <h3 class="font-semibold mb-4">Today's Focus</h3>
+        <div class="text-5xl font-bold mb-2"><span id="focusTime">0</span>m</div>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div id="bar" class="h-full bg-violet-500 transition-all" style="width:0%"></div>
+        </div>
+        <p class="text-xs text-white/50 mt-3">Distractions: <span id="distractions">0</span></p>
+      </div>
+
+      <div class="glass rounded-[24px] p-6">
+        <h3 class="font-semibold mb-3">How it works</h3>
+        <ul class="text-sm text-white/60 space-y-2">
+          <li>• 100% in browser - no data sent</li>
+          <li>• MediaPipe Face Mesh AI</li>
+          <li>• Eye tracking & head pose</li>
+          <li>• Focus score in real-time</li>
+        </ul>
+        <button id="startBtn" class="w-full mt-5 bg-violet-600 hover:bg-violet-500 rounded-full py-3 font-semibold transition">Enable Camera</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-center text-white/30 text-xs mt-10">Clone of ismaeiladel.github.io/FocusTrack-AI - Built with MediaPipe & Tailwind</p>
+</div>
+
 <script>
-function openStudent(){document.getElementById('landing').style.display='none';document.getElementById('studentView').style.display='block';document.getElementById('backBtn').style.display='block';}
-function openTeacher(){document.getElementById('landing').style.display='none';document.getElementById('teacherView').style.display='block';document.getElementById('backBtn').style.display='block';}
-const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d'),focusValue=document.getElementById('focusValue'),eyeDirEl=document.getElementById('eyeDir'),headDirEl=document.getElementById('headDir'),eyeStateEl=document.getElementById('eyeState'),statusBox=document.getElementById('statusBox'),alertAudio=document.getElementById('alertAudio');let lastBeep=0,audioCtx;function playAlert(){if(Date.now()-lastBeep<3000)return;lastBeep=Date.now();alertAudio.currentTime=0;alertAudio.play().catch(()=>{});try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();audioCtx.resume();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.setValueAtTime(900,audioCtx.currentTime);g.gain.setValueAtTime(0.8,audioCtx.currentTime);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+0.5);}catch(e){}if(navigator.vibrate)navigator.vibrate([400,100,400]);}function calcFocus(l){let s=100,eyeD='للشاشة ✅',headD='ثابت ✅',eyeS='مفتوحة ✅';const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152],mT=l[13],mB=l[14];const yaw=nose.x-0.5;if(Math.abs(yaw)>0.13){s-=35;eyeD=yaw>0?'يمين ➡️':'شمال ⬅️';headD='لافف';}const pitch=fore.y-chin.y;if(pitch<0.2){s-=30;headD='موطي ⬇️';}else if(pitch>0.4){s-=20;headD='رافع ⬆️';}const eyeOpen=Math.abs(eyeT.y-eyeB.y);if(eyeOpen<0.006){s-=50;eyeS='مقفولة 😴';}const mouthOpen=Math.abs(mT.y-mB.y);if(mouthOpen>0.06){s-=15;eyeS='تثاؤب 🥱';}return{score:Math.max(0,Math.min(100,Math.round(s))),eyeD,headD,eyeS};}function onResults(r){canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(r.image,0,0,canvas.width,canvas.height);if(r.multiFaceLandmarks&&r.multiFaceLandmarks.length>0){const res=calcFocus(r.multiFaceLandmarks[0]);focusValue.textContent=res.score+'%';eyeDirEl.textContent=res.eyeD;headDirEl.textContent=res.headD;eyeStateEl.textContent=res.eyeS;document.getElementById('t_focus').textContent=res.score+'%';document.getElementById('t_eye').textContent=res.eyeD;document.getElementById('t_head').textContent=res.headD;if(res.score<50)playAlert();}}const faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.6});faceMesh.onResults(onResults);document.getElementById('startBtn').onclick=async()=>{try{alertAudio.play().then(()=>alertAudio.pause()).catch(()=>{});if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();await audioCtx.resume();const cam=new Camera(video,{onFrame:async()=>{await faceMesh.send({image:video});},width:640,height:480});await cam.start();statusBox.textContent='✅ الكاميرا الطويلة شغالة - وشك بقى صغير ومظبوط';document.getElementById('startBtn').style.display='none';}catch(e){statusBox.textContent='فشل: '+e.message}};
-</script></body></html>
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const barEl = document.getElementById('bar');
+const statusEl = document.getElementById('status');
+const focusTimeEl = document.getElementById('focusTime');
+const distractionsEl = document.getElementById('distractions');
+const startBtn = document.getElementById('startBtn');
+
+let focusScore = 0,
