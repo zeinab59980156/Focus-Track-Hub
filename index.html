@@ -1,74 +1,62 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FocusTrack AI</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet"><style>*{font-family:Cairo,sans-serif;box-sizing:border-box}body{margin:0;background:#eef4ff;padding-bottom:85px}header{background:linear-gradient(180deg,#3b82f6,#1d4ed8);color:#fff;padding:14px 12px 18px;text-align:center;border-radius:0 0 20px 20px}header h1{margin:0;font-size:20px;font-weight:800}header p{font-size:12px;margin:2px 0 10px;opacity:.9}.tabs{display:flex;justify-content:center;gap:8px}.tab{padding:6px 22px;border-radius:20px;border:none;font-weight:700;font-size:13px;cursor:pointer}.tab.active{background:#fff;color:#1d4ed8}.tab:not(.active){background:rgba(255,255,255,.25);color:#fff}.sub{margin:10px;text-align:center;color:#64748b;font-size:11px}.top{display:flex;justify-content:space-between;align-items:center;margin:12px 14px}.top h2{margin:0;font-size:17px;font-weight:800;color:#0f172a}.end{background:#ef4444;color:#fff;border:none;padding:7px 14px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px}.card{background:#fff;border-radius:14px;padding:14px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.05)}.card b{font-size:24px;display:block;line-height:1}.card b.blue{color:#2563eb}.card b.green{color:#16a34a}.card b.orange{color:#f59e0b}.card span{font-size:12px;color:#334155;display:block;margin-top:3px}.page{display:none}.page.active{display:block}.student-card{background:#fff;border-radius:16px;padding:14px;margin:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:3px solid #e5e7eb}.student-card.good{border-top-color:#16a34a}.student-card.mid{border-top-color:#f59e0b}.student-card.low{border-top-color:#ef4444}.s-head{display:flex;justify-content:space-between;align-items:center}.s-name{display:flex;align-items:center;gap:8px;font-weight:800}.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.avatar.blue{background:#2563eb}.badge{padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}.badge.good{background:#dcfce7;color:#15803d}.badge.mid{background:#fef3c7;color:#b45309}.badge.low{background:#fee2e2;color:#dc2626}.percent{font-size:28px;font-weight:800;margin:8px 0 4px}.percent.green{color:#16a34a}.percent.yellow{color:#d97706}.percent.red{color:#dc2626}.bar{height:8px;background:#f1f5f9;border-radius:10px;overflow:hidden;margin:6px 0}.bar-fill{height:100%;border-radius:10px}.bar-fill.green{background:#16a34a}.bar-fill.yellow{background:#f59e0b}.bar-fill.red{background:#ef4444}.s-foot{display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:6px}.alert-box{background:#fff;border-radius:14px;padding:12px 14px;margin:10px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 6px rgba(0,0,0,.05);border-right:4px solid #ef4444}.alert-box.orange{border-right-color:#f59e0b}.stat-big{background:#fff;border-radius:16px;padding:16px;margin:12px 14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06)}.bars{display:flex;justify-content:center;gap:30px;align-items:end;margin-top:14px;height:120px}.bcol{text-align:center}.bcol .bar-v{width:60px;border-radius:8px 8px 0 0;margin:0 auto}.bcol .bar-v.green{height:90px;background:#16a34a}.bcol .bar-v.orange{height:35px;background:#f59e0b}.bcol span{font-size:12px;display:block;margin-top:6px}.report-box{background:#fff;border-radius:16px;padding:18px;margin:12px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06);font-size:13px;line-height:1.8;text-align:center}.btn-blue{background:#1d4ed8;color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:800;width:100%;margin:8px 0;cursor:pointer}.btn-light{background:#e0f2fe;color:#1d4ed8;border:none;padding:10px 20px;border-radius:10px;font-weight:800;width:100%;cursor:pointer}.note{font-size:10px;color:#94a3b8;text-align:center;margin:10px 14px;line-height:1.6}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;padding:6px 0 8px;z-index:99}.nav{font-size:10px;color:#94a3b8;text-align:center;cursor:pointer;padding:4px 10px;border-radius:10px;line-height:1.2}.nav.active{color:#fff;background:#2563eb}.nav div{font-size:18px}</style></head><body>
-<header><h1>FocusTrack AI</h1><p>ركز أكثر .. تعلم أفضل</p><div class="tabs"><button id="t-teacher" class="tab active" onclick="showTeacher()">مدرس</button><button class="tab" onclick="alert('واجهة الطالب - الكاميرا الطويلة')">طالب</button></div></header>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FocusTrack</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script><script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script><style>*{font-family:Cairo,sans-serif;box-sizing:border-box}body{margin:0;background:#eef4ff;padding-bottom:85px}header{background:linear-gradient(180deg,#3b82f6,#1d4ed8);color:#fff;padding:14px 12px 18px;text-align:center;border-radius:0 0 20px 20px}header h1{margin:0;font-size:20px;font-weight:800}header p{font-size:12px;margin:2px 0 10px;opacity:.9}.tabs{display:flex;justify-content:center;gap:8px}.tab{padding:6px 22px;border-radius:20px;border:none;font-weight:700;font-size:13px;cursor:pointer}.tab.active{background:#fff;color:#1d4ed8}.tab:not(.active){background:rgba(255,255,255,.25);color:#fff}.sub{margin:10px;text-align:center;color:#64748b;font-size:11px}.card{background:#fff;border-radius:16px;padding:14px;margin:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}.page{display:none}.page.active{display:block}.circle-wrap{display:flex;flex-direction:column;align-items:center;padding:10px}.circle{width:140px;height:140px;border-radius:50%;border:10px solid #e5e7eb;border-top-color:#16a34a;border-right-color:#16a34a;display:flex;align-items:center;justify-content:center;flex-direction:column}.circle b{font-size:36px;color:#16a34a;line-height:1}.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;background:#dcfce7;color:#15803d;margin-top:8px}.btn-blue{background:#1d4ed8;color:#fff;border:none;padding:10px 20px;border-radius:12px;font-weight:800;width:100%;margin-top:12px;cursor:pointer}.stats-row{display:flex;justify-content:space-between;margin:8px 0;font-size:13px}.bar{height:8px;background:#f1f5f9;border-radius:10px;overflow:hidden}.bar-fill{height:100%;border-radius:10px}.bar-fill.blue{background:#3b82f6}.bar-fill.green{background:#16a34a}.bar-fill.orange{background:#f59e0b}#camBox{position:relative;width:100%;height:220px;background:#0f172a;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;border:2px solid #1d4ed8}video{width:100%;height:100%;object-fit:contain!important;transform:scaleX(-1);background:#000}canvas{position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(-1)} .ai-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}.ai-row:last-child{border:none}.privacy{border:2px solid #16a34a}.badges{display:flex;flex-direction:column;gap:8px;margin-top:10px}.badge2{background:#f1f5f9;padding:6px 10px;border-radius:20px;font-size:11px;display:flex;align-items:center;gap:6px}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;padding:6px 0 8px;z-index:99}.nav{font-size:10px;color:#94a3b8;text-align:center;cursor:pointer;padding:4px 10px;border-radius:10px;line-height:1.2}.nav.active{color:#fff;background:#2563eb}.nav div{font-size:18px}</style></head><body>
+<header><h1>FocusTrack</h1><p>ركز أكثر، تعلم أفضل</p><div class="tabs"><button class="tab" onclick="location.href='#teacher'">مدرس</button><button class="tab active">طالب</button></div></header>
 <div class="sub">نموذج تجريبي - جميع البيانات محاكاة</div>
 
-<!-- الرئيسية -->
+<!-- الرئيسية - طالب -->
 <div id="p-home" class="page active">
-<div class="top"><h2>لوحة متابعة الطلاب</h2><button class="end" onclick="endClass()">إنهاء الحصة</button></div>
-<div class="cards"><div class="card"><b class="blue">24</b><span>عدد الطلاب</span></div><div class="card"><b class="blue">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b class="orange">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b class="green">18</b><span>طلاب بتركيز جيد</span></div></div>
-<div style="margin:14px"><b style="font-size:13px">التنبيهات</b></div>
-<div class="alert-box"><div><b style="font-size:13px">تنبيه — سارة</b><div style="font-size:11px;color:#64748b">نسبة التركيز 43%<br>مدة التشتت 18 دقيقة</div></div><div style="color:#ef4444">🔴</div></div>
-<div class="alert-box orange"><div><b style="font-size:13px">تنبيه — محمد</b><div style="font-size:11px;color:#64748b">نسبة التركيز 64%<br>مدة التشتت 11 دقيقة</div></div><div style="color:#f59e0b">🟡</div></div>
-<div class="note">يُعرض العرض الاحتمالات التقديرية فقط - بدون أي فيديو.</div>
+<div class="card" style="text-align:center"><b style="font-size:14px">الكاميرا تعمل</b><div style="width:12px;height:12px;background:#16a34a;border-radius:50%;display:inline-block;margin-right:6px"></div>
+<div class="circle-wrap"><div class="circle"><b id="focusCircle">82%</b><span style="font-size:11px;color:#64748b">التركيز</span></div><div class="badge"><span style="width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block"></span> <span id="focusBadge">التركيز جيد</span></div><div style="font-size:10px;color:#94a3b8;margin-top:6px">مؤشر تركيز تقديري - تحليل تجريبي</div><button id="startBtn" class="btn-blue">▶ بدء متابعة التركيز</button><div style="font-size:11px;color:#64748b;margin-top:8px">في المستشار كل ثانيتين - دقيقة</div></div></div>
+
+<div class="card"><b style="font-size:14px">الحصة الحالية</b>
+<div style="margin-top:10px"><div class="stats-row"><span>مدة الحصة</span><span>42 دقيقة</span></div><div class="bar"><div class="bar-fill blue" style="width:100%"></div></div></div>
+<div style="margin-top:10px"><div class="stats-row"><span>مدة التركيز</span><span id="focusTime">35 دقيقة</span></div><div class="bar"><div class="bar-fill green" style="width:83%"></div></div></div>
+<div style="margin-top:10px"><div class="stats-row"><span>مدة التشتت</span><span id="lostTime">7 دقائق</span></div><div class="bar"><div class="bar-fill orange" style="width:17%"></div></div></div>
 </div>
 
-<!-- الطلاب -->
-<div id="p-students" class="page">
-<div class="top"><h2>لوحة متابعة الطلاب</h2></div>
-<div class="student-card good"><div class="s-head"><div class="s-name"><div class="avatar blue">أ</div>أحمد</div><span class="badge good">جيد ●</span></div><div class="percent green">87%</div><div class="bar"><div class="bar-fill green" style="width:87%"></div></div><div class="s-foot"><span>مدة التشتت</span><span>4 دقائق</span></div></div>
-<div class="student-card mid"><div class="s-head"><div class="s-name"><div class="avatar blue">م</div>محمد</div><span class="badge mid">متوسط ●</span></div><div class="percent yellow">64%</div><div class="bar"><div class="bar-fill yellow" style="width:64%"></div></div><div class="s-foot"><span>مدة التشتت</span><span>11 دقيقة</span></div></div>
-<div class="student-card low"><div class="s-head"><div class="s-name"><div class="avatar blue">س</div>سارة</div><span class="badge low">منخفض ●</span></div><div class="percent red">43%</div><div class="bar"><div class="bar-fill red" style="width:43%"></div></div><div class="s-foot"><span>مدة التشتت</span><span>18 دقيقة</span></div></div>
-<div class="student-card good"><div class="s-head"><div class="s-name"><div class="avatar blue">ع</div>علي</div><span class="badge good">جيد ●</span></div><div class="percent green">91%</div><div class="bar"><div class="bar-fill green" style="width:91%"></div></div><div class="s-foot"><span>مدة التشتت</span><span>دقيقتان</span></div></div>
-<div class="note">يُعرض العرض الاحتمالات التقديرية فقط - بدون أي فيديو.</div>
+<div class="card privacy"><b style="font-size:13px">🔒 الخصوصية أولاً</b><ul style="font-size:11px;color:#334155;line-height:1.8;padding-right:16px;margin:8px 0"><li>تتم معالجة بيانات الكاميرا على جهاز الطالب.</li><li>لا يتم حفظ أو إرسال فيديو الكاميرا.</li><li>يتم استخدام النتائج الإحصائية فقط لمتابعة.</li></ul><div class="badges"><span class="badge2">🟢 Video Recording: OFF</span><span class="badge2">🟢 Cloud Upload: OFF</span><span class="badge2">🟢 Local Processing: ON</span></div><div style="font-size:10px;color:#94a3b8;margin-top:8px;text-align:center">هذا تمثيل توضيحي للخصوصية في النموذج التجريبي فقط</div></div>
 </div>
 
-<!-- إحصائيات الفصل -->
-<div id="p-stats" class="page">
-<div class="top"><h2>إحصائيات الفصل</h2></div>
-<div class="cards"><div class="card"><b class="blue">24</b><span>عدد الطلاب</span></div><div class="card"><b class="blue">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b class="orange">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b class="green">18</b><span>طلاب بتركيز جيد</span></div></div>
-<div class="stat-big"><b style="font-size:14px">التركيز مقابل التشتت</b><div class="bars"><div class="bcol"><div style="font-size:12px">76%</div><div class="bar-v green"></div><span>التركيز</span></div><div class="bcol"><div style="font-size:12px">24%</div><div class="bar-v orange"></div><span>التشتت</span></div></div></div>
+<!-- متابعة التركيز - فيها الكاميرا الحقيقية -->
+<div id="p-track" class="page">
+<div class="card"><b style="font-size:14px">معاينة الكاميرا (حقيقية)</b>
+<div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas><div id="camPlaceholder" style="color:#fff;font-size:13px;position:absolute">اضغط بدء متابعة التركيز لتشغيل الكاميرا</div></div>
+<div style="font-size:10px;color:#94a3b8;text-align:center;margin-top:6px">لا يتم التعرف على هوية الطالب - الصورة توضيحية فقط</div>
 </div>
 
-<!-- التنبيهات -->
-<div id="p-alerts" class="page">
-<div class="top"><h2>التنبيهات</h2></div>
-<div class="alert-box"><div><b style="font-size:13px">تنبيه — سارة</b><div style="font-size:11px;color:#64748b">نسبة التركيز 43%<br>مدة التشتت 18 دقيقة</div></div><div>🔴</div></div>
-<div class="alert-box orange"><div><b style="font-size:13px">تنبيه — محمد</b><div style="font-size:11px;color:#64748b">نسبة التركيز 64%<br>مدة التشتت 11 دقيقة</div></div><div>🟡</div></div>
-<div class="note">يُعرض العرض الاحتمالات التقديرية فقط - بدون أي فيديو.<br><br>مؤشر تركيز تقديري - تحليل تجريبي، النتائج تساعد على المتابعة ولا تمثل تقييما نفسيا أو طبيا.</div>
+<div class="card"><b style="font-size:14px">تحليل الذكاء الاصطناعي (تجريبي)</b>
+<div class="ai-row"><span>اتجاه العين</span><span id="eyeDir">أمام الشاشة</span></div>
+<div class="ai-row"><span>تعبير الوجه</span><span id="faceExp">طبيعي</span></div>
+<div class="ai-row"><span>حركة الرأس</span><span id="headMove">مستقرة</span></div>
+<div style="margin-top:10px"><b style="font-size:12px">حساب مؤشر التركيز (محاكاة)</b>
+<div class="ai-row"><span>تتبع العين</span><span id="eyeTrack">84%</span></div>
+<div class="bar"><div id="eyeBar" class="bar-fill blue" style="width:84%"></div></div>
+<div class="ai-row"><span>تعبير الوجه</span><span>81%</span></div><div class="bar"><div class="bar-fill blue" style="width:81%"></div></div>
+<div class="ai-row"><span>حركة الرأس</span><span>78%</span></div><div class="bar"><div class="bar-fill blue" style="width:78%"></div></div>
+<div class="ai-row" style="font-weight:800;color:#16a34a"><span>النتيجة</span><span id="resultFocus">82% تركيز</span></div>
 </div>
-
-<!-- التقارير -->
-<div id="p-reports" class="page">
-<div class="top"><h2>التقارير</h2></div>
-<div id="report-before" class="report-box">لم يتم إنهاء الحصة بعد. اضغط «إنهاء الحصة» من الصفحة الرئيسية لإنشاء التقرير.</div>
-<div id="report-after" class="report-box" style="display:none"><div style="color:#16a34a;font-weight:800">✅ تم إنهاء الحصة - التقرير جاهز.</div><button class="btn-blue">📄 عرض التقرير</button><button class="btn-light">🖨️ طباعة التقرير</button></div>
-<div class="note">مؤشر تركيز تقديري - تحليل تجريبي، النتائج تساعد على المتابعة ولا تمثل تقييما نفسيا أو طبيا.</div>
+</div>
+<!-- شلت المربعين بتوع محاكاة التشتت والعودة للتركيز زي ما طلبتي -->
 </div>
 
 <div class="bottom">
 <div id="n-home" class="nav active" onclick="go('home')"><div>🏠</div>الرئيسية</div>
-<div id="n-students" class="nav" onclick="go('students')"><div>👥</div>الطلاب</div>
-<div id="n-stats" class="nav" onclick="go('stats')"><div>📊</div>إحصائيات<br>الفصل</div>
-<div id="n-alerts" class="nav" onclick="go('alerts')"><div>🔔</div>التنبيهات</div>
-<div id="n-reports" class="nav" onclick="go('reports')"><div>📄</div>التقارير</div>
+<div id="n-track" class="nav" onclick="go('track')"><div>🎥</div>متابعة<br>التركيز</div>
+<div class="nav" onclick="go('home')"><div>📊</div>إحصائيات</div>
+<div class="nav" onclick="go('home')"><div>⚙️</div>الإعدادات</div>
 </div>
 
 <script>
-let ended=false;
 function go(name){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
-document.getElementById('p-'+name).classList.add('active');
-document.getElementById('n-'+name).classList.add('active');
-window.scrollTo(0,0);
+if(name==='home'){document.getElementById('p-home').classList.add('active');document.getElementById('n-home').classList.add('active');}
+else{ document.getElementById('p-track').classList.add('active');document.getElementById('n-track').classList.add('active');}
 }
-function endClass(){
-ended=true;
-document.getElementById('report-before').style.display='none';
-document.getElementById('report-after').style.display='block';
-alert('تم إنهاء الحصة');
-go('reports');
-}
-function showTeacher(){ go('home'); }
-</script>
-</body></html>
+const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
+const focusCircle=document.getElementById('focusCircle'),resultFocus=document.getElementById('resultFocus'),eyeDirEl=document.getElementById('eyeDir'),faceExpEl=document.getElementById('faceExp'),headMoveEl=document.getElementById('headMove'),focusTimeEl=document.getElementById('focusTime'),lostTimeEl=document.getElementById('lostTime'),eyeTrackEl=document.getElementById('eyeTrack'),eyeBarEl=document.getElementById('eyeBar'),camPlaceholder=document.getElementById('camPlaceholder');
+let focusVal=82;
+function calcFocus(l){let s=100,eyeD='أمام الشاشة',face='طبيعي',head='مستقرة';const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152],mT=l[13],mB=l[14];const yaw=nose.x-0.5;if(Math.abs(yaw)>0.13){s-=30;eyeD=yaw>0?'يمين':'شمال';head='لافف';}const pitch=fore.y-chin.y;if(pitch<0.2){s-=25;head='موطي';}else if(pitch>0.4){s-=15;head='رافع';}const eyeOpen=Math.abs(eyeT.y-eyeB.y);if(eyeOpen<0.006){s-=40;face='نعسان';}const mouthOpen=Math.abs(mT.y-mB.y);if(mouthOpen>0.06){s-=15;face='تثاؤب';}return{score:Math.max(0,Math.min(100,Math.round(s))),eyeD,face,head};}
+function onResults(r){canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(r.image,0,0,canvas.width,canvas.height);if(r.multiFaceLandmarks&&r.multiFaceLandmarks.length>0){const res=calcFocus(r.multiFaceLandmarks[0]);focusVal=res.score;focusCircle.textContent=res.score+'%';resultFocus.textContent=res.score+'% تركيز';eyeDirEl.textContent=res.eyeD;faceExpEl.textContent=res.face;headMoveEl.textContent=res.head;eyeTrackEl.textContent=res.score+'%';eyeBarEl.style.width=res.score+'%';let focused=Math.round(42*res.score/100);focusTimeEl.textContent=focused+' دقيقة';lostTimeEl.textContent=(42-focused)+' دقائق';}}
+const faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.6});faceMesh.onResults(onResults);
+document.getElementById('startBtn').onclick=async()=>{try{camPlaceholder.style.display='none';const cam=new Camera(video,{onFrame:async()=>{await faceMesh.send({image:video});},width:640,height:480});await cam.start();go('track');}catch(e){alert('فشل الكاميرا: '+e.message);}};
+</script></body></html>
