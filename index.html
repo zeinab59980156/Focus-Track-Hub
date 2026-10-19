@@ -13,10 +13,10 @@
 <div id="t-reports" class="page"><div class="card" style="text-align:center"><b>التقارير</b><p>متوسط: <span id="avg3">76%</span></p><button class="btn-blue" style="background:#2563eb" onclick="goT('home')">عودة</button></div></div>
 <div class="bottom" id="t-bottom"><div id="nt-home" class="nav active" onclick="goT('home')"><div>🏠</div>الرئيسية</div><div id="nt-students" class="nav" onclick="goT('students')"><div>👥</div>الطلاب</div><div id="nt-stats" class="nav" onclick="goT('stats')"><div>📊</div>إحصائيات</div><div id="nt-alerts" class="nav" onclick="goT('alerts')"><div>🔔</div>التنبيهات</div><div id="nt-reports" class="nav" onclick="goT('reports')"><div>📄</div>التقارير</div></div></div>
 <div id="studentRoot" style="display:none">
-<div id="s-home" class="page active"><div class="card" style="text-align:center"><div id="circle" class="circle" style="margin:auto"><b id="focusCircle">--%</b></div><p id="status" style="font-weight:800;margin-top:8px">مستعد</p><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button><button onclick="testBeep()" style="margin-top:8px;background:#fff;border:1px solid #2563eb;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;color:#2563eb">🔊 جربي النغمة قبل الكاميرا</button></div></div>
+<div id="s-home" class="page active"><div class="card" style="text-align:center"><div id="circle" class="circle" style="margin:auto"><b id="focusCircle">--%</b></div><p id="status" style="font-weight:800;margin-top:8px">مستعد</p><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button><button onclick="testBeep()" style="margin-top:8px;background:#fff;border:1px solid #2563eb;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;color:#2563eb">🔊 جربي النغمة</button></div></div>
 <div id="s-track" class="page"><div class="card"><b>الكاميرا 📷</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div></div><div class="card"><b>نسبة التركيز</b><div style="display:flex;justify-content:space-between;font-weight:800"><span>التركيز</span><span id="meterValue">--%</span></div><div class="bar"><div id="meterFill" class="bar-fill" style="width:0%;background:#16a34a"></div></div><p id="meterStatus" style="text-align:center;font-weight:800;margin-top:10px">في انتظار الكاميرا</p></div></div>
 <div id="s-stats" class="page"><div class="card"><b>إحصائياتي</b><div style="font-size:28px;font-weight:800;color:#16a34a;text-align:center" id="myAvg2">--%</div><div class="bar"><div id="myBar2" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div></div>
-<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><p style="line-height:2.2">✅ فوق 40% = ساكت<br>🔔 تحت 40% = نغمة متوسطة تيت تيت تيت</p></div></div>
+<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><p style="line-height:2.2">✅ فوق 40% = ساكت - حتى لو وشك معوج سنة<br>🔔 تحت 40% = يرن فورا<br>الحساسية: متوسطة خفيفة - مش بيرن على اي حركة</p></div></div>
 <div class="bottom" id="s-bottom" style="display:none"><div id="ns-home" class="nav active" onclick="goS('home')"><div>🏠</div>الرئيسية</div><div id="ns-track" class="nav" onclick="goS('track')"><div>🎥</div>متابعة</div><div id="ns-stats" class="nav" onclick="goS('stats')"><div>📊</div>إحصائيات</div><div id="ns-settings" class="nav" onclick="goS('settings')"><div>⚙️</div>الإعدادات</div></div></div>
 <script>
 let students=[{name:"أحمد محمد",focus:91},{name:"سارة علي",focus:82},{name:"محمد أحمد",focus:64},{name:"علي حسن",focus:78},{name:"زينب محمود",focus:88},{name:"فاطمة خالد",focus:74}];
@@ -40,12 +40,14 @@ function beep40(score){
  }catch{}
 }
 function testBeep(){audioCtx=new(window.AudioContext||window.webkitAudioContext)(); beep40(35);}
+// هنا الحساسية الجديدة - خفيفة - الوش لازم يتعوج جامد
 function calc(l){
  const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152];
  const yaw=Math.abs(nose.x-0.5), eyeOpen=Math.abs(eyeT.y-eyeB.y), pitch=Math.abs(fore.y-chin.y);
- let isEyeClosed=eyeOpen<0.012; let isTilt=yaw>0.08 || pitch<0.28 || pitch>0.46;
- let score=90; if(isEyeClosed) score=20; else if(isTilt) score=35; else score=90;
- return{score,isEyeClosed,isTilt};
+ let isEyeClosed=eyeOpen<0.006; // لازم العين تتقفل جامد
+ let isTilt=yaw>0.14 || pitch<0.20 || pitch>0.58; // لازم الوش يتعوج جامد
+ let score=92; if(isEyeClosed) score=20; else if(isTilt) score=35; else score=92;
+ return{score};
 }
 function onResults(r){
  canvas.width=video.videoWidth; canvas.height=video.videoHeight; ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -59,7 +61,7 @@ function onResults(r){
   meterFill.style.background=score>=40?'#16a34a':'#ef4444';
   circle.style.borderColor=score>=40?'#16a34a':'#ef4444'; focusCircle.style.color=score>=40?'#16a34a':'#ef4444';
   students[4].focus=score; renderT();
-  if(score < 40){meterStatus.textContent='🔔 تركيزك '+score+'% - اقل من 40% - ترن'; meterStatus.style.color='#dc2626'; statusEl.textContent='🔔 '+score+'%'; beep40(score);}else{stopBeep(); meterStatus.textContent='✅ تركيزك '+score+'% - مفيش رنة'; meterStatus.style.color='#16a34a'; statusEl.textContent='✅ '+score+'%';}
+  if(score < 40){meterStatus.textContent='🔔 تركيزك '+score+'% - اقل من 40% - يرن'; meterStatus.style.color='#dc2626'; statusEl.textContent='🔔 '+score+'%'; beep40(score);}else{stopBeep(); meterStatus.textContent='✅ تركيزك '+score+'% - حتى لو وشك معوج سنة مفيش رنة'; meterStatus.style.color='#16a34a'; statusEl.textContent='✅ '+score+'%';}
  }
 }
 const faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
