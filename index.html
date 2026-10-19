@@ -5,7 +5,6 @@
 .student-row{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #f1f5f9}
 </style></head><body>
 <header><h1>FocusTrack</h1><p>ركز أكثر، تعلم أفضل</p><div class="tabs"><button id="tabT" class="tab active" onclick="showRoot('teacher')">مدرس</button><button id="tabS" class="tab" onclick="showRoot('student')">طالب</button></div></header>
-
 <div id="teacherRoot">
 <div id="t-home" class="page active"><div style="display:flex;justify-content:space-between;margin:12px 14px"><h2 style="margin:0;font-size:18px">لوحة متابعة الطلاب</h2><button style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-weight:700" onclick="goT('reports')">إنهاء الحصة</button></div><div class="cards"><div class="card"><b id="avg1" style="color:#2563eb">76%</b><span>متوسط تركيز الفصل</span></div><div class="card"><b id="good1" style="color:#16a34a">18</b><span>طلاب بتركيز جيد</span></div><div class="card"><b id="need1" style="color:#f59e0b">6</b><span>طلاب يحتاجون متابعة</span></div><div class="card"><b style="color:#2563eb">24</b><span>عدد الطلاب</span></div></div></div>
 <div id="t-students" class="page"><div class="card"><b>قائمة الطلاب</b></div><div id="t-students-list" class="card"></div></div>
@@ -13,14 +12,12 @@
 <div id="t-alerts" class="page"><div class="card"><b>التنبيهات</b><div>لا يوجد تنبيهات حاليا ✅</div></div></div>
 <div id="t-reports" class="page"><div class="card" style="text-align:center"><b>التقارير</b><p>متوسط: <span id="avg3">76%</span></p><button class="btn-blue" style="background:#2563eb" onclick="goT('home')">عودة</button></div></div>
 <div class="bottom" id="t-bottom"><div id="nt-home" class="nav active" onclick="goT('home')"><div>🏠</div>الرئيسية</div><div id="nt-students" class="nav" onclick="goT('students')"><div>👥</div>الطلاب</div><div id="nt-stats" class="nav" onclick="goT('stats')"><div>📊</div>إحصائيات</div><div id="nt-alerts" class="nav" onclick="goT('alerts')"><div>🔔</div>التنبيهات</div><div id="nt-reports" class="nav" onclick="goT('reports')"><div>📄</div>التقارير</div></div></div>
-
 <div id="studentRoot" style="display:none">
-<div id="s-home" class="page active"><div class="card" style="text-align:center"><div id="circle" class="circle" style="margin:auto"><b id="focusCircle">--%</b></div><p id="status" style="font-weight:800;margin-top:8px">مستعد</p><div id="toneAlert" class="alertTone">🔔 تركيزك قل!</div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button><button onclick="testBeep()" style="margin-top:8px;background:#fff;border:1px solid #ddd;padding:6px 12px;border-radius:8px;font-size:12px">🔊 جربي النغمة</button></div></div>
+<div id="s-home" class="page active"><div class="card" style="text-align:center"><div id="circle" class="circle" style="margin:auto"><b id="focusCircle">--%</b></div><p id="status" style="font-weight:800;margin-top:8px">مستعد</p><div id="toneAlert" class="alertTone"></div><button id="startBtn" class="btn-blue">▶ اضغط هنا لتشغيل الكاميرا</button><button onclick="testBeep()" style="margin-top:8px;background:#fff;border:1px solid #2563eb;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;color:#2563eb">🔊 جربي النغمة قبل الكاميرا</button></div></div>
 <div id="s-track" class="page"><div class="card"><b>الكاميرا 📷</b><div id="camBox"><video id="video" autoplay muted playsinline></video><canvas id="canvas"></canvas></div></div><div class="card"><b>نسبة التركيز</b><div style="display:flex;justify-content:space-between;font-weight:800"><span>التركيز</span><span id="meterValue">--%</span></div><div class="bar"><div id="meterFill" class="bar-fill" style="width:0%;background:#16a34a"></div></div><p id="meterStatus" style="text-align:center;font-weight:800;margin-top:10px">في انتظار الكاميرا</p></div></div>
 <div id="s-stats" class="page"><div class="card"><b>إحصائياتي</b><div style="font-size:28px;font-weight:800;color:#16a34a;text-align:center" id="myAvg2">--%</div><div class="bar"><div id="myBar2" class="bar-fill" style="width:0%;background:#16a34a"></div></div></div></div>
-<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><p style="line-height:2.2">✅ فوق 40% = ساكت<br>🔔 تحت 40% = نغمة متوسطة<br>نفس الشكل القديم 100%</p></div></div>
+<div id="s-settings" class="page"><div class="card"><b>الإعدادات</b><p style="line-height:2.2">✅ فوق 40% = ساكت<br>🔔 تحت 40% = نغمة متوسطة تيت تيت تيت</p></div></div>
 <div class="bottom" id="s-bottom" style="display:none"><div id="ns-home" class="nav active" onclick="goS('home')"><div>🏠</div>الرئيسية</div><div id="ns-track" class="nav" onclick="goS('track')"><div>🎥</div>متابعة</div><div id="ns-stats" class="nav" onclick="goS('stats')"><div>📊</div>إحصائيات</div><div id="ns-settings" class="nav" onclick="goS('settings')"><div>⚙️</div>الإعدادات</div></div></div>
-
 <script>
 let students=[{name:"أحمد محمد",focus:91},{name:"سارة علي",focus:82},{name:"محمد أحمد",focus:64},{name:"علي حسن",focus:78},{name:"زينب محمود",focus:88},{name:"فاطمة خالد",focus:74}];
 function renderT(){let avg=Math.round(students.reduce((a,b)=>a+b.focus,0)/students.length);document.getElementById('avg1').textContent=avg+'%';document.getElementById('avg2').textContent=avg+'%';document.getElementById('avg3').textContent=avg+'%';document.getElementById('avgBar').style.width=avg+'%';let list=document.getElementById('t-students-list');if(list){list.innerHTML=students.map(s=>`<div class="student-row"><span>${s.name}</span><b style="color:${s.focus>=80?'#16a34a':s.focus>=60?'#f59e0b':'#ef4444'}">${s.focus}%</b></div>`).join('');}}
@@ -28,10 +25,8 @@ renderT();
 function showRoot(r){if(r==='teacher'){teacherRoot.style.display='block';studentRoot.style.display='none';tabT.classList.add('active');tabS.classList.remove('active');tBottom.style.display='flex';sBottom.style.display='none';goT('home');}else{teacherRoot.style.display='none';studentRoot.style.display='block';tabS.classList.add('active');tabT.classList.remove('active');tBottom.style.display='none';sBottom.style.display='flex';goS('home');}}
 function goT(n){document.querySelectorAll('#teacherRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#t-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('t-'+n)?.classList.add('active');document.getElementById('nt-'+n)?.classList.add('active');}
 function goS(n){document.querySelectorAll('#studentRoot .page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('#s-bottom .nav').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+n)?.classList.add('active');document.getElementById('ns-'+n)?.classList.add('active');}
-
 const video=document.getElementById('video'),canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d'),focusCircle=document.getElementById('focusCircle'),meterStatus=document.getElementById('meterStatus'),toneAlert=document.getElementById('toneAlert'),statusEl=document.getElementById('status'),meterValue=document.getElementById('meterValue'),meterFill=document.getElementById('meterFill'),circle=document.getElementById('circle'),myAvg2=document.getElementById('myAvg2'),myBar2=document.getElementById('myBar2');
 let audioCtx=null,lastBeep=0,activeOs=[];
-
 function stopBeep(){try{activeOs.forEach(o=>{try{o.stop()}catch{}});activeOs=[];toneAlert.style.display='none';}catch{}}
 function beep40(score){
  const now=Date.now(); if(now-lastBeep<1500) return; lastBeep=now;
@@ -39,35 +34,19 @@ function beep40(score){
   if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
   if(audioCtx.state==='suspended') audioCtx.resume();
   stopBeep();
-  // نغمة متوسطة واضحة - 3 نغمات
-  for(let i=0;i<3;i++){
-   const o=audioCtx.createOscillator(),g=audioCtx.createGain();
-   o.connect(g); g.connect(audioCtx.destination);
-   o.type='sine'; o.frequency.value=900;
-   const t=audioCtx.currentTime+i*0.25;
-   g.gain.setValueAtTime(0,t);
-   g.gain.linearRampToValueAtTime(0.9,t+0.05);
-   g.gain.exponentialRampToValueAtTime(0.001,t+0.2);
-   o.start(t); o.stop(t+0.22); activeOs.push(o);
-  }
-  toneAlert.style.display='block'; toneAlert.textContent='🔔 تركيزك '+score+'% - ركزي!';
+  for(let i=0;i<3;i++){const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g); g.connect(audioCtx.destination);o.type='sine'; o.frequency.value=900;const t=audioCtx.currentTime+i*0.25;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.9,t+0.05);g.gain.exponentialRampToValueAtTime(0.001,t+0.2);o.start(t); o.stop(t+0.22); activeOs.push(o);}
+  toneAlert.style.display='block'; toneAlert.textContent='🔔 تركيزك '+score+'% - اقل من 40%';
   if(navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
- }catch(e){console.log(e)}
+ }catch{}
 }
-function testBeep(){audioCtx=new(window.AudioContext||window.webkitAudioContext)(); beep40(30);}
-
+function testBeep(){audioCtx=new(window.AudioContext||window.webkitAudioContext)(); beep40(35);}
 function calc(l){
  const nose=l[1],eyeT=l[159],eyeB=l[145],fore=l[10],chin=l[152];
  const yaw=Math.abs(nose.x-0.5), eyeOpen=Math.abs(eyeT.y-eyeB.y), pitch=Math.abs(fore.y-chin.y);
- let isEyeClosed=eyeOpen<0.012;
- let isTilt=yaw>0.08 || pitch<0.28 || pitch>0.46;
- let score=90;
- if(isEyeClosed) score=20;
- else if(isTilt) score=35;
- else score=90;
+ let isEyeClosed=eyeOpen<0.012; let isTilt=yaw>0.08 || pitch<0.28 || pitch>0.46;
+ let score=90; if(isEyeClosed) score=20; else if(isTilt) score=35; else score=90;
  return{score,isEyeClosed,isTilt};
 }
-
 function onResults(r){
  canvas.width=video.videoWidth; canvas.height=video.videoHeight; ctx.clearRect(0,0,canvas.width,canvas.height);
  if(r.multiFaceLandmarks && r.multiFaceLandmarks[0]){
@@ -75,35 +54,19 @@ function onResults(r){
   let minX=1,minY=1,maxX=0,maxY=0; lm.forEach(p=>{minX=Math.min(minX,p.x);minY=Math.min(minY,p.y);maxX=Math.max(maxX,p.x);maxY=Math.max(maxY,p.y);});
   const x=minX*canvas.width,y=minY*canvas.height,w=(maxX-minX)*canvas.width,h=(maxY-minY)*canvas.height;
   ctx.strokeStyle='#22c55e'; ctx.lineWidth=3; ctx.strokeRect(x,y,w,h);
-  const res=calc(lm);
-  const score=res.score;
+  const res=calc(lm); const score=res.score;
   focusCircle.textContent=score+'%'; meterValue.textContent=score+'%'; meterFill.style.width=score+'%'; myAvg2.textContent=score+'%'; myBar2.style.width=score+'%';
   meterFill.style.background=score>=40?'#16a34a':'#ef4444';
   circle.style.borderColor=score>=40?'#16a34a':'#ef4444'; focusCircle.style.color=score>=40?'#16a34a':'#ef4444';
   students[4].focus=score; renderT();
-
-  if(score < 40){
-    meterStatus.textContent='🔔 تركيزك '+score+'% - اقل من 40% - ترن'; meterStatus.style.color='#dc2626';
-    statusEl.textContent='🔔 تركيزك '+score+'%';
-    beep40(score);
-  }else{
-    stopBeep();
-    meterStatus.textContent='✅ تركيزك '+score+'% - مفيش رنة'; meterStatus.style.color='#16a34a';
-    statusEl.textContent='✅ '+score+'% - ممتاز';
-  }
+  if(score < 40){meterStatus.textContent='🔔 تركيزك '+score+'% - اقل من 40% - ترن'; meterStatus.style.color='#dc2626'; statusEl.textContent='🔔 '+score+'%'; beep40(score);}else{stopBeep(); meterStatus.textContent='✅ تركيزك '+score+'% - مفيش رنة'; meterStatus.style.color='#16a34a'; statusEl.textContent='✅ '+score+'%';}
  }
 }
 const faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
 faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.4,minTrackingConfidence:0.4});
 faceMesh.onResults(onResults);
 async function startCam(){
- try{
-  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"},audio:false});
-  video.srcObject=s; await video.play(); canvas.width=video.videoWidth; canvas.height=video.videoHeight;
-  goS('track');
-  async function loop(){if(video.readyState>=2) await faceMesh.send({image:video}); requestAnimationFrame(loop);} loop();
- }catch(e){alert('اسمحي للكاميرا');}
+ try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"},audio:false});video.srcObject=s; await video.play(); canvas.width=video.videoWidth; canvas.height=video.videoHeight; goS('track'); async function loop(){if(video.readyState>=2) await faceMesh.send({image:video}); requestAnimationFrame(loop);} loop();}catch(e){alert('اسمحي للكاميرا');}
 }
 document.getElementById('startBtn').onclick=startCam;
 showRoot('teacher');
